@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Time } from '../../node_modules/@angular/common';
+import { NotifierService } from 'angular-notifier';
 
 interface variableResponse {
 	cmd: string;
@@ -30,7 +30,11 @@ interface functionResponse {
 
 export class PhotonService {
 
-  constructor(private http: HttpClient, private data: PhotonService) { }
+	private readonly notifier: NotifierService;
+
+  	constructor(private http: HttpClient, private data: PhotonService, notifierService: NotifierService) {
+		this.notifier = notifierService;
+	  }
   
 	// Remove these after implementing database authentication
 	userProfile = {
@@ -44,7 +48,10 @@ export class PhotonService {
 	photonAccessString: string =   "?access_token=" + this.userProfile.photonAccessToken
 
 	// Handle Errors
-	throwError(error) {
+	throwError(error, notifyTitle="") {
+		if (notifyTitle != "") {
+			this.notifier.notify("error", notifyTitle + " Failed :(");
+		}
 		console.log('An error occurred while performing: ', error);
 		throw error;
 	}
@@ -61,7 +68,8 @@ export class PhotonService {
 			}
 		  )
 		}
-  	callFunction(functionName, functionArg) {
+  	callFunction(functionName, functionArg, notifyTitle="") {
+		this.notifier.notify("default", "Connecting...")
 		if (functionName == 'auger'){
 			// Disable auger buttons
 		}
@@ -72,8 +80,10 @@ export class PhotonService {
 		data => {
 			if (data.return_value == 1) {
 				console.log(functionName + ' performed successfully: ' + functionArg);
+				if (notifyTitle != "") {
+					this.notifier.notify("success", notifyTitle + " Success!");
 			} else {
-				this.throwError(data);
+				this.throwError(data, notifyTitle);
 			}
 			// Remove auger disable class
 		}, 
