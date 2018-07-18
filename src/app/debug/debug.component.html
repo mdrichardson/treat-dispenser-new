@@ -1,1 +1,23 @@
-<button type="button" class="auger" (click)="tone()">Play Tone</button>
+<div>
+    <h1>Debug</h1>
+    <br>
+    <div>
+        <button type="button" class="auger" (click)="load()"><i class="material-icons">drag_indicator</i>Load Dispenser</button>
+        <br>
+        <br>
+        <br>
+        <div class="">
+            <ul class="">
+                <li><button type="button" class="button info" (click)="in()"><i class="material-icons">keyboard_arrow_right</i>In</button></li>
+                <li><button type="button" class="button info" (click)="inout()"><i class="material-icons">keyboard_arrow_right</i>In/Out<i class="material-icons">keyboard_arrow_left</i></button></li>
+                <li><button type="button" class="button info" (click)="out()">Out<i class="material-icons">keyboard_arrow_right</i></button></li>
+            </ul>
+        <button type="button" class="button alert large expand" (click)="stop()"><i class="material-icons">stop</i>Stop</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <button type="button" class="button warning large expand auger" (click)="test()"><i class="material-icons">build</i>Test</button>
+        <button type="button" class="button secondary large expand auger" (click)="tone()"><i class="material-icons">volume_down</i>Play Tone</button>
+    </div>
+</div>

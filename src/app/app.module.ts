@@ -34,7 +34,14 @@ import { NotifierModule } from 'angular-notifier';
               distance: 12,
               gap: 10
             }
-          }
+          },
+        behaviour: {
+            autoHide: 3000,
+            onClick: 'hide',
+            onMouseover: 'pauseAutoHide',
+            showDismissButton: true,
+            stacking: 4
+          },
     })
   ],
   providers: [],
