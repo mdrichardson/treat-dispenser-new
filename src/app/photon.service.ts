@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Time } from '../../node_modules/@angular/common';
 import { NotifierService } from 'angular-notifier';
+import { DatabaseService, userInterface } from './database.service';
 
 interface variableResponse {
 	cmd: string;
@@ -32,20 +33,12 @@ export class PhotonService {
 
 	private readonly notifier: NotifierService;
 
-  	constructor(private http: HttpClient, private data: PhotonService, notifierService: NotifierService) {
-		this.notifier = notifierService;
-	  }
-  
-	// Remove these after implementing database authentication
-	userProfile = {
-		photonDeviceId: "380043000d47343432313031",
-		photonAccessToken: "60d3db642ac254b2374d2282877a25f1553a2350",
-		videoUrl: "https://localhost:8100/live/0?authToken=",
-		videoAuthToken: "45cc4607-3024-44bf-85d4-e6ac879deaa5"
-	}
+	user: Object;
 
-	photonApiUrl: string = "https://api.particle.io/v1/devices/" + this.userProfile.photonDeviceId + "/"; 
-	photonAccessString: string =   "?access_token=" + this.userProfile.photonAccessToken
+  	constructor(private http: HttpClient, private data: PhotonService, notifierService: NotifierService, private db: DatabaseService) {
+		this.notifier = notifierService;
+		this.user = db.getUser();
+	  }
 
 	// Handle Errors
 	throwError(error, notifyTitle="") {
@@ -58,7 +51,7 @@ export class PhotonService {
 
 	// Get variable values from function
   	getVariable(variable) {
-		this.http.get<variableResponse>(this.photonApiUrl + variable + this.photonAccessString)
+		this.http.get<variableResponse>(this.user["photonApiUrl"] + variable + this.user["photonAccessString"])
 		.subscribe(
 			data => {
 				return data.result;
@@ -74,7 +67,7 @@ export class PhotonService {
 			// Disable auger buttons
 		}
 		this.http.post<functionResponse>(
-			this.photonApiUrl + functionName + this.photonAccessString, // URL
+			this.user["photonApiUrl"] + functionName + this.user["photonAccessString"], // URL
 			{"arg": functionArg} // Data
 		).subscribe(
 		data => {
@@ -82,14 +75,14 @@ export class PhotonService {
 				console.log(functionName + ' performed successfully: ' + functionArg);
 				if (notifyTitle != "") {
 					this.notifier.notify("success", notifyTitle + " Success!");
-			} else {
-				this.throwError(data, notifyTitle);
-			}
+				} else {
+					this.throwError(data, notifyTitle);
+				}
 			// Remove auger disable class
+			}
 		}, 
 		error => {
 			this.throwError(error)
 		}
-	)
-}
+	)}
 }

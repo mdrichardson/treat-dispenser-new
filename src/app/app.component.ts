@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NotifierModule } from 'angular-notifier';
 
 @Component({
   selector: 'app-root',
