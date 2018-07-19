@@ -3,8 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Time } from '../../node_modules/@angular/common';
 import { NotifierService } from 'angular-notifier';
 import { DatabaseService, userInterface } from './database.service';
+import { Observable } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
-interface variableResponse {
+declare var EventSource;
+
+export interface variableResponse {
 	cmd: string;
 	coreInfo: {
 		deviceID: string;
@@ -25,6 +29,16 @@ interface functionResponse {
 	return_value: number;
 }
 
+interface eventResponse {
+    event: string;
+    data: {
+        data: string;
+        ttl: number;
+        published_at: Time;
+        coreid: string;
+    }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,13 +47,13 @@ export class PhotonService {
 
 	private readonly notifier: NotifierService;
 
-	user: Object;
+    public user;
 
-  	constructor(private http: HttpClient, private data: PhotonService, notifierService: NotifierService, private db: DatabaseService) {
+  	constructor(private http: HttpClient, notifierService: NotifierService, private db: DatabaseService) {
 		this.notifier = notifierService;
-		this.user = db.getUser();
-	  }
-
+        this.user = db.getUser<userInterface>();
+      }
+    
 	// Handle Errors
 	throwError(error, notifyTitle="") {
 		if (notifyTitle != "") {
@@ -62,14 +76,21 @@ export class PhotonService {
 		  )
 		}
   	callFunction(functionName, functionArg, notifyTitle="") {
-		this.notifier.notify("default", "Connecting...")
+        this.notifier.notify("default", "Connecting...")
+        // Set longer timeout for debugs
+        var timeoutLength = 10000;
+        if (functionArg.includes('in', 'out', 'inout', 'load') || functionName == 'auger') {
+            timeoutLength = 30000;
+        }
 		if (functionName == 'auger'){
 			// Disable auger buttons
 		}
 		this.http.post<functionResponse>(
 			this.user["photonApiUrl"] + functionName + this.user["photonAccessString"], // URL
 			{"arg": functionArg} // Data
-		).subscribe(
+        )
+        .pipe(timeout(10000))
+        .subscribe(
 		data => {
 			if (data.return_value == 1) {
 				console.log(functionName + ' performed successfully: ' + functionArg);
@@ -84,5 +105,24 @@ export class PhotonService {
 		error => {
 			this.throwError(error)
 		}
-	)}
+    )}
+    // Server-Sent Event Listeners/Observers
+    watchStatus(url: string): Observable<eventResponse> {
+        return new Observable<eventResponse>(obs => {
+            const source = new EventSource(url);
+            source.addEventListener('status', (event) => {
+                obs.next(JSON.parse(event.data).data);
+            });
+            return () => source.close();
+        });
+    }
+    watchActivity(url: string): Observable<eventResponse> {
+        return new Observable<eventResponse>(obs => {
+            const source = new EventSource(url);
+            source.addEventListener('activity', (event) => {
+                obs.next(JSON.parse(event.data).data);
+            });
+            return () => source.close();
+        });
+    }
 }

@@ -16,7 +16,7 @@ export class DatabaseService {
 
      constructor() { }
 
-    getUser<user>() {
+    getUser<userInterface>() {
         // Remove these after implementing database authentication
         const photonDeviceId_tmp = "380043000d47343432313031";
         const photonAccessToken_tmp = "60d3db642ac254b2374d2282877a25f1553a2350";
@@ -32,5 +32,6 @@ export class DatabaseService {
             photonApiUrl: photonApiUrl_tmp,
             photonAccessString: photonAccessString_tmp
         }
+        return 
 	}
 }

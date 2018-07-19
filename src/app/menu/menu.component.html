@@ -4,13 +4,17 @@
                 <i class="material-icons">home</i><span class="hide-mobile">Home</span>
             </a>
         </li>
-        <li><a routerLink="">
+        <li><a routerLink="settings">
                 <i class="material-icons">settings</i><span class="hide-mobile">Settings</span>
             </a>
         </li>
-        <li><a routerLink="">
+        <li><a routerLink="debug">
                 <i class="material-icons">bug_report</i><span class="hide-mobile">Debug</span>
             </a>
         </li>
     </ul>   
+    <div id="info">
+            <p id="status">Status:<br />{{ status }}</p>
+            <p id ="activity">Activity:<br />{{ activity }}</p>
+    </div>
 </nav>

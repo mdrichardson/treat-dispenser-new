@@ -7,7 +7,7 @@ import { DebugComponent } from './debug/debug.component';
 const routes: Routes = [
     {
         path: '',
-        component: DebugComponent // Switch to HomeComponent after debugging
+        component: HomeComponent
       },
       {
         path: 'settings',
@@ -15,7 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'debug',
-        component: HomeComponent // Switch to DebugComponent after drbugging
+        component: DebugComponent
       },
 ];
 
