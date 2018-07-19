@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Time } from '../../node_modules/@angular/common';
 import { NotifierService } from 'angular-notifier';
 import { DatabaseService, userInterface } from './database.service';
 import { Observable } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { timeout, catchError, map } from 'rxjs/operators';
 
 declare var EventSource;
 
@@ -63,18 +63,20 @@ export class PhotonService {
 		throw error;
 	}
 
-	// Get variable values from function
-  	getVariable(variable) {
-		this.http.get<variableResponse>(this.user["photonApiUrl"] + variable + this.user["photonAccessString"])
-		.subscribe(
-			data => {
-				return data.result;
-			},
-			error => {
-				this.throwError(error);
-			}
-		  )
-		}
+	// Get variable values from function. We can't use .subscribe here because it removes async when calling elsewhere
+    getVariable(variable) {
+        return this.http.get<variableResponse>(this.user["photonApiUrl"] + variable + this.user["photonAccessString"])
+        .pipe( // have to user pipe with rxjs operators
+            catchError((error):any => { // catch errors here so we don't have to individually
+                error => {
+                    this.throwError(error);
+                    return error;
+                }}),
+            map((data:variableResponse) => data.result) // only returns the variable value
+            )
+    }
+
+    // Call functions on the Photon. We can .subscribe here because we don't need to handle results anywhere else
   	callFunction(functionName, functionArg, notifyTitle="") {
         this.notifier.notify("default", "Connecting...")
         // Set longer timeout for debugs
