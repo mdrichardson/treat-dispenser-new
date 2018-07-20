@@ -1,49 +1,32 @@
 @import "../node_modules/angular-notifier/styles.scss";
 
+$mobile: 768px;
+$menu-height: 40px75px;
+
 body {
     margin: 0;
     background: #F2F2F2;
     height: 100vh;
 }
 
-#container {
-   display: grid;
-   grid-template-columns: 120px auto;
-   height: 100%;
+.grid-container {
+    display: grid;
+}
 
-   #content {
-       padding: 30px 50px;
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
 
-       ul {
-           list-style-type: none;
-           margin:0;padding:0;
-       
-           li {
-               background: #fff;
-               border-radius: 8px;
-               padding: 20px;
-               margin-bottom: 8px;
-       
-               a {
-                   font-size: 1.5em;
-                   text-decoration: none;
-                   font-weight: bold;
-                   color:#00A8FF;
-               }
-       
-               ul {
-                   margin-top: 20px;
-                   
-                   li {
-                       padding:0;
-       
-                       a {
-                           font-size: 1em;
-                           font-weight: 300;
-                       }
-                   }
-               }
-           }
-       }
-   }
+@media only screen and (max-width: $mobile) {
+    .hide-mobile {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: $mobile) {
+    .only-mobile {
+        display: none;
+    }
 }
