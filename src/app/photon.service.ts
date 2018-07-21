@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Time } from '../../node_modules/@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { NotifierService } from 'angular-notifier';
 import { DatabaseService, userInterface } from './database.service';
 import { Observable } from 'rxjs';
@@ -14,8 +13,8 @@ export interface variableResponse {
 		deviceID: string;
 		connected: boolean;
 		last_app: string;
-		last_handshake_at: Time;
-		last_heard: Time;
+		last_handshake_at: string;
+		last_heard: string;
 		product_id: number;
 	};
 	name: string;
@@ -34,7 +33,7 @@ interface eventResponse {
     data: {
         data: string;
         ttl: number;
-        published_at: Time;
+        published_at: string;
         coreid: string;
     }
 }
@@ -47,62 +46,58 @@ export class PhotonService {
 
 	private readonly notifier: NotifierService;
 
-    public user;
+    public user: userInterface;
 
-  	constructor(private http: HttpClient, notifierService: NotifierService, private db: DatabaseService) {
+  	constructor(private http: HttpClient, private notifierService: NotifierService, private db: DatabaseService) {
 		this.notifier = notifierService;
         this.user = db.getUser<userInterface>();
       }
     
-	// Handle Errors
-	throwError(error, notifyTitle="") {
-		if (notifyTitle != "") {
-			this.notifier.notify("error", notifyTitle + " Failed :(");
+    // Handle Errors
+	throwError(error: any, notifyTitle: string='') {
+		if (notifyTitle) {
+			this.notifier.notify(error, `${notifyTitle} Failed :(`);
 		}
-		console.log('An error occurred while performing: ', error);
+		console.log(`An error occurred while performing: ${error}`);
 		throw error;
 	}
 
 	// Get variable values from function. We can't use .subscribe here because it removes async when calling elsewhere
-    getVariable(variable) {
-        return this.http.get<variableResponse>(this.user["photonApiUrl"] + variable + this.user["photonAccessString"])
-        .pipe( // have to user pipe with rxjs operators
-            catchError((error):any => { // catch errors here so we don't have to individually
-                error => {
-                    this.throwError(error);
-                    return error;
-                }}),
-            map((data:variableResponse) => data.result) // only returns the variable value
-            )
-    }
+    getVariable = (variable: string) => 
+            this.http.get<variableResponse>(this.user['photonApiUrl'] + variable + this.user['photonAccessString'])
+            .pipe( // have to user pipe with rxjs operators
+                catchError((error):any => { // catch errors here so we don't have to individually
+                    error => {
+                        this.throwError(error);
+                        return error;
+                    }}),
+                map((data: variableResponse) => data.result) // only returns the variable value
+                )
 
     // Call functions on the Photon. We can .subscribe here because we don't need to handle results anywhere else
-  	callFunction(functionName, functionArg, notifyTitle="") {
-        this.notifier.notify("default", "Connecting...")
+  	callFunction(functionName, functionArg, notifyTitle='') {
+        this.notifier.notify('default', `Sending ${functionArg ? functionArg : functionName} command...`);        
         // Set longer timeout for debugs
-        var timeoutLength = 10000;
-        if (functionArg.includes('in', 'out', 'inout', 'load') || functionName == 'auger') {
-            timeoutLength = 30000;
-        }
+        var TimeoutLength = (functionArg.includes('in', 'out', 'inout', 'load') || functionName == 'auger') ? 30000 : 10000;
 		if (functionName == 'auger'){
 			// Disable auger buttons
 		}
 		this.http.post<functionResponse>(
-			this.user["photonApiUrl"] + functionName + this.user["photonAccessString"], // URL
-			{"arg": functionArg} // Data
+			this.user['photonApiUrl'] + functionName + this.user['photonAccessString'], // URL
+			{'arg': functionArg} // Data
         )
-        .pipe(timeout(10000))
+        .pipe(timeout(TimeoutLength))
         .subscribe(
 		data => {
 			if (data.return_value == 1) {
-				console.log(functionName + ' performed successfully: ' + functionArg);
-				if (notifyTitle != "") {
-					this.notifier.notify("success", notifyTitle + " Success!");
-				} else {
-					this.throwError(data, notifyTitle);
-				}
-			// Remove auger disable class
-			}
+                console.log(`${functionName} performed successfully: ${functionArg}`);
+				if (notifyTitle) {
+					this.notifier.notify('success', `${notifyTitle} Success!`);
+				} 
+			} else {
+                this.throwError(data, notifyTitle);
+            }
+            // Remove auger disable class
 		}, 
 		error => {
 			this.throwError(error)

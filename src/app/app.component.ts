@@ -16,19 +16,6 @@ export class AppComponent implements OnInit{
         this.user = db.getUser<userInterface>();
     }
 
-    // source = new EventSource(this.user['photonApiUrl'] + "events" + this.user['photonAccessString']);
-    // source.addEventListener('status', function(event) {
-    //         event = JSON.parse(event['data']);
-    //         console.log(event['data']);
-    //         setStatus(event['data'])
-    //     });
-    //     source.addEventListener('activity', function(event) {
-    //         event = JSON.parse(event['data']);
-    // this.statusSource.subscribe(
-    //     // data => this.setStatus(data)
-    // )
-    
-
     ngOnInit() {
         
     }

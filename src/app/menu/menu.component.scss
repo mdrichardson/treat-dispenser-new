@@ -3,7 +3,7 @@
 nav {
     background: #2D2E2E;
     grid-template-rows: 1fr;
-    grid-template-columns: 50px 350px 1fr auto 50px;
+    grid-template-columns: $main-page-padding 30% 1fr auto $main-page-padding;
     width: 100vw;
 
     #menu-items {

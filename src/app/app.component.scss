@@ -18,5 +18,5 @@ app-status-bar {
     grid-column-start: 2;
     @extend .center;
     display: grid;
-    grid-template-columns: 50px 1fr 50px;
+    grid-template-columns: $main-page-padding 1fr $main-page-padding;
 }

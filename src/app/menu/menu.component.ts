@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PhotonService } from '../photon.service';
-import { DatabaseService } from '../database.service';
+import { DatabaseService, userInterface } from '../database.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,28 +8,36 @@ import { Subscription } from 'rxjs';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
 
-    public user:Object;
+export class MenuComponent implements OnInit, OnDestroy {
+
+    public user: userInterface;
     private statusSource: Subscription;
-    public status:any = 'Connecting...';
+    public status: string = 'Connecting...';
     private activitySource: Subscription;
-    public activity:any = 'Idle';
+    public activity: string = 'Idle';
 
 
     constructor(private photon: PhotonService, private db: DatabaseService) {
-        this.user = db.getUser();
+        this.user = db.getUser<userInterface>();
     }
 
 
     ngOnInit() {
-        this.statusSource = this.photon.watchStatus(this.user["photonApiUrl"] + 'events/' + this.user["photonAccessString"])
+        let eventsURL = `${this.user['photonApiUrl']}events/${this.user['photonAccessString']}`;
+
+        this.statusSource = this.photon.watchStatus(eventsURL)
                             .subscribe(event => {
-                                this.status = event;
+                                this.status = event.toString();
                             });
-        this.activitySource = this.photon.watchActivity(this.user["photonApiUrl"] + 'events/' + this.user["photonAccessString"])
+        this.activitySource = this.photon.watchActivity(eventsURL)
                             .subscribe(event => {
-                                this.activity = event;
+                                this.activity = event.toString();
                             });
+    }
+
+    ngOnDestroy() {
+        this.statusSource.unsubscribe();
+        this.activitySource.unsubscribe();
     }
 }

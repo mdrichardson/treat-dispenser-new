@@ -9,27 +9,15 @@ import { PhotonService } from '../photon.service';
 export class DebugComponent implements OnInit {
 
     constructor(private photon: PhotonService) { }
-        load() {
-            return this.photon.callFunction("auger", "load", "Load");
-        }
-        in() {
-            return this.photon.callFunction("auger", "in", "Pull");
-        }
-        out() {
-            return this.photon.callFunction("auger", "out", "Push");
-        }
-        inout() {
-            return this.photon.callFunction("auger", "inout", "In/Out");
-        }
-        stop() {
-            return this.photon.callFunction("auger", "stop", "Stop");
-        }
-        test() {
-            return this.photon.callFunction("test", "auger", "Test");
-        }
-        tone() {
-            return this.photon.callFunction("test", "tone", "Tone");
-        }
+    
+        load = () =>this.photon.callFunction('auger', 'load', 'Load');
+        in = () => this.photon.callFunction('auger', 'in', 'Pull');
+        out = () => this.photon.callFunction('auger', 'out', 'Push');
+        inout = () => this.photon.callFunction('auger', 'inout', 'In/Out');
+        stop = () => this.photon.callFunction('auger', 'stop', 'Stop');
+        test = () => this.photon.callFunction('test', 'auger', 'Test');
+        tone = () => this.photon.callFunction('test', 'tone', 'Tone');
+
     ngOnInit() {
     }
 

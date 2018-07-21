@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotonService, variableResponse } from '../photon.service';
-import { DatabaseService } from '../database.service';
+import { PhotonService } from '../photon.service';
 
 @Component({
   selector: 'app-status-bar',
@@ -9,9 +8,9 @@ import { DatabaseService } from '../database.service';
 })
 export class StatusBarComponent implements OnInit {
 
-    public last:any = '?';
+    public last: string = '?';
 
-    constructor(private photon: PhotonService, private db:DatabaseService) { }
+    constructor(private photon: PhotonService) { }
 
     ngOnInit() {
         this.photon.getVariable('last').subscribe(
