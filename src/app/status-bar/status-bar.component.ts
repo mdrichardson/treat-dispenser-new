@@ -13,6 +13,10 @@ export class StatusBarComponent implements OnInit {
     constructor(private photon: PhotonService) { }
 
     ngOnInit() {
-        this.photon.getVariable('last').subscribe(
-			data => this.last = data )}
+        setInterval((() => 
+        {
+            this.photon.getVariable('last')
+            .subscribe(data => this.last = data)
+            })(), 20000); // () makes it call immediately, then every 20 seconds
+    }
 }
