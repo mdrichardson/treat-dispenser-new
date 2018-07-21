@@ -4,6 +4,7 @@ import { NotifierService } from 'angular-notifier';
 import { DatabaseService, userInterface } from './database.service';
 import { Observable } from 'rxjs';
 import { timeout, catchError, map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 declare var EventSource;
 
@@ -71,7 +72,8 @@ export class PhotonService {
                         this.throwError(error);
                         return error;
                     }}),
-                map((data: variableResponse) => data.result) // only returns the variable value
+                map((data: variableResponse) => variable == 'last' ? 
+                    moment.unix(parseInt(data.result)).fromNow() : data.result)     
                 )
 
     // Call functions on the Photon. We can .subscribe here because we don't need to handle results anywhere else
@@ -97,7 +99,7 @@ export class PhotonService {
 			} else {
                 this.throwError(data, notifyTitle);
             }
-            // Remove auger disable class
+            // enable auger buttons
 		}, 
 		error => {
 			this.throwError(error)
