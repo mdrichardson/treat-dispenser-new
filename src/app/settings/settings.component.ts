@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+    public intervalStartDefault: Date = new Date(2018, 1, 1, 0, 0, 0);
 
-  ngOnInit() {
-  }
+    constructor() { }
+
+    ngOnInit() {
+    }
 
 }

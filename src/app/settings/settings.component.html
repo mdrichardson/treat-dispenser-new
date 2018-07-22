@@ -1,3 +1,110 @@
-<p>
-  settings works!
-</p>
+
+<h1>Settings</h1>
+<div id="proportions">
+    <h2>Proportions</h2>
+    <h3>Treat Size</h3>
+    <span id="small-treat">S</span>
+    <span id="med-treat">M</span>
+    <span id="large-treat">L</span>
+    <h3>Meal Size</h3>
+    <span id="small-meal">S</span>
+    <span id="med-meal">M</span>
+    <span id="large-meal">L</span>
+</div>
+<div id="interval">
+    <h2>Interval Treat Dispensing</h2>
+    <div>
+        <input type="radio"><label>Run Continuously</label>
+    </div>
+    <div>
+        <input type="radio"><label>Run Only Within Time Period</label>
+    </div>
+    <div>
+        <label>
+            Start Time
+            <input [owlDateTimeTrigger]="intervalStart" [owlDateTime]="intervalStart">
+            <owl-date-time [pickerType]="'timer'" #intervalStart stepMinute="15" hour12Timer="true" [startAt]="intervalStartDefault"></owl-date-time>
+        </label>
+    </div>
+    <div>
+        <label>
+            End Time
+            <input [owlDateTimeTrigger]="intervalEnd" [owlDateTime]="intervalEnd">
+            <owl-date-time [pickerType]="'timer'" #intervalEnd stepMinute="15" hour12Timer="true" [startAt]="intervalStartDefault"></owl-date-time>
+        </label>
+    </div>
+    <h3>Dispense Treat Every:</h3>
+    <div>
+        <label>Hours: </label>
+        <select>
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+    </div>
+    <div>
+        <label>Minutes: </label>
+        <select>
+        <option>0</option>
+        <option>5</option>
+        <option>15</option>
+        <option>30</option>
+        <option>45</option>
+        </select>
+    </div>
+</div>
+<div id="scheduled">
+    <h2>Scheduled Meal Dispensing</h2>
+    <h3>Dispense Meals On:</h3>
+    <div class="days">
+        <div>
+            <div><input id="schedSun" type="checkbox"><label for="schedSun">Sunday</label></div>
+            <div><input id="schedMon" type="checkbox"><label for="schedMon">Monday</label></div>
+            <div><input id="schedTue" type="checkbox"><label for="schedTue">Tuesday</label></div>
+            <div><input id="schedWed" type="checkbox"><label for="schedWed">Wednesday</label></div>
+        </div>
+        <div>
+            <div><input id="schedThu" type="checkbox"><label for="schedThu">Thursday</label></div>
+            <div><input id="schedFri" type="checkbox"><label for="schedFri">Friday</label></div>
+            <div><input id="schedSat" type="checkbox"><label for="schedSat">Saturday</label></div>
+        </div>
+    </div>
+    <h3>Dispense At:</h3>
+    <div id="schedule-times">
+        <div>
+            <label>
+                Time 1
+                <input [owlDateTimeTrigger]="scheduleTime1" [owlDateTime]="scheduleTime1">
+                <owl-date-time [pickerType]="'timer'" #scheduleTime1 stepMinute="15" hour12Timer="true" [startAt]="intervalStartDefault"></owl-date-time>
+            </label>
+        </div>
+        <div>
+            <label>
+                Time 2
+                <input [owlDateTimeTrigger]="scheduleTime2" [owlDateTime]="scheduleTime2">
+                <owl-date-time [pickerType]="'timer'" #scheduleTime2 stepMinute="15" hour12Timer="true" [startAt]="intervalStartDefault"></owl-date-time>
+            </label>
+        </div>
+        <div>
+            <label>
+                Time 3
+                <input [owlDateTimeTrigger]="scheduleTime3" [owlDateTime]="scheduleTime3">
+                <owl-date-time [pickerType]="'timer'" #scheduleTime3 stepMinute="15" hour12Timer="true" [startAt]="intervalStartDefault"></owl-date-time>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+
+

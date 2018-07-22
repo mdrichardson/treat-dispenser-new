@@ -9,6 +9,19 @@ import { HomeComponent } from './home/home.component';
 import { DebugComponent } from './debug/debug.component';
 import { StatusBarComponent } from './status-bar/status-bar.component';
 import { NotifierModule } from 'angular-notifier';
+import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS} from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+export const MY_MOMENT_FORMATS = {
+    parseInput: 'l LT',
+    fullPickerInput: 'l LT',
+    datePickerInput: 'l',
+    timePickerInput: 'LT',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+};
 
 @NgModule({
   declarations: [
@@ -21,6 +34,7 @@ import { NotifierModule } from 'angular-notifier';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     NotifierModule.withConfig({
@@ -42,9 +56,11 @@ import { NotifierModule } from 'angular-notifier';
             showDismissButton: true,
             stacking: 4
           },
-    })
+    }),
+    OwlDateTimeModule, 
+    OwlMomentDateTimeModule,
   ],
-  providers: [],
+  providers: [{provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

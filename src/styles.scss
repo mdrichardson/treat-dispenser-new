@@ -1,8 +1,9 @@
 @import "../node_modules/angular-notifier/styles.scss";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 $mobile: 768px;
 $menu-height: 40px;
-$status-bar-height: 20px;
+$status-bar-height: 25px;
 $main-page-padding: 5%;
 
 body {
