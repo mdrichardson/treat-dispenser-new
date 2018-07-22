@@ -72,8 +72,12 @@ export class PhotonService {
                         this.throwError(error);
                         return error;
                     }}),
-                map((data: variableResponse) => variable == 'last' ? 
-                    moment.unix(parseInt(data.result)).fromNow() : data.result)     
+                map((data: variableResponse) =>
+                    (variable != 'last') // if variable isn't 'last', return result
+                        ? data.result
+                        : (data.result != '?') // if variable is 'last', return '* seconds ago' or '? if it's unknown
+                        ? moment.unix(parseInt(data.result)).fromNow()
+                        : data.result)     
                 )
 
     // Call functions on the Photon. We can .subscribe here because we don't need to handle results anywhere else

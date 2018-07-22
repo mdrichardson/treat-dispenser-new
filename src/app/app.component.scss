@@ -2,7 +2,7 @@
 
 #main-container {
     display: grid;
-    grid-template-rows: $menu-height 15px 1fr;
+    grid-template-rows: $menu-height $status-bar-height 1fr;
     grid-template-columns: 1fr;
 }
 
@@ -12,6 +12,7 @@ app-menu {
 
 app-status-bar {
     grid-column-start: 2;
+    height: $status-bar-height;
 }
 
 #content {

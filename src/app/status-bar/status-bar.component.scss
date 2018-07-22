@@ -1,0 +1,22 @@
+@import '../../styles';
+
+* {
+    color:black; 
+    font-size:0.9   em;
+}
+
+.grid-container {
+    background-color: lightgray;
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: $main-page-padding repeat(3, 1fr) $main-page-padding;
+}
+
+#last {
+    grid-column-start: 3;
+}
+
+#info {
+    justify-self: end;    
+}
