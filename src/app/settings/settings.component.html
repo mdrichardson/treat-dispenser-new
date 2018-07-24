@@ -4,15 +4,15 @@
     <h2>Proportions</h2>
     <h3>Treat Size</h3>
     <div class="proportions grid-container">
-        <div #treatProportion id="0" (click)="setProportions(treatProportions, '0', 'treat', 'Treat Size S')">S</div>
-        <div #treatProportion id="1" (click)="setProportions(treatProportions, '1', 'treat', 'Treat Size M')">M</div>
-        <div #treatProportion id="2" (click)="setProportions(treatProportions, '2', 'treat', 'Treat Size L')">L</div>
+        <div #treatProportion id="0" (click)="setProportions('treat', '0', 'Treat Size S')" [ngClass]="{'active': treatSize == '0'}">S</div>
+        <div #treatProportion id="1" (click)="setProportions('treat', '1', 'Treat Size M')" [ngClass]="{'active': treatSize == '1'}">M</div>
+        <div #treatProportion id="2" (click)="setProportions('treat', '2', 'Treat Size L')" [ngClass]="{'active': treatSize == '2'}">L</div>
     </div>
     <h3>Meal Size</h3>
     <div class="proportions">
-        <div #mealProportion id="0" (click)="setProportions(mealProportions, '0', 'meal', 'Meal Size S')">S</div>
-        <div #mealProportion id="1" (click)="setProportions(mealProportions, '1', 'meal', 'Meal Size M')">M</div>
-        <div #mealProportion id="2" (click)="setProportions(mealProportions, '2', 'meal', 'Meal Size L')">L</div>
+        <div #mealProportion id="0" (click)="setProportions('meal', '0', 'Meal Size S')" [ngClass]="{'active': mealSize == '0'}">S</div>
+        <div #mealProportion id="1" (click)="setProportions('meal', '1', 'Meal Size M')" [ngClass]="{'active': mealSize == '1'}">M</div>
+        <div #mealProportion id="2" (click)="setProportions('meal', '2', 'Meal Size L')" [ngClass]="{'active': mealSize == '2'}">L</div>
     </div>
 </div>
 <div class="grid-container" id="intervals">

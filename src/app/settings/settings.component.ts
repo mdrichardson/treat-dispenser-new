@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PhotonService } from '../photon.service';
 import * as moment from 'moment';
 
@@ -28,11 +28,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     public intervals = <intervalsInterface>{};
     private intervalsWarning: boolean;
 
-    @ViewChildren('treatProportion') treatProportions: QueryList<any>;
-    @ViewChildren('mealProportion') mealProportions: QueryList<any>;
-    
-
-    constructor(private renderer: Renderer2, private photon: PhotonService) { }
+    constructor(private photon: PhotonService) { }
 
     // Get Proportion variables from Photon
     getProportions = () => {
@@ -41,21 +37,12 @@ export class SettingsComponent implements OnInit, AfterViewInit {
             let sizes = JSON.parse(response.toString());
             this.treatSize = sizes.treat;
             this.mealSize = sizes.meal;
-            this.setProportions(this.treatProportions,this.treatSize, 'none');
-            this.setProportions(this.mealProportions,this.mealSize, 'none');
         });
     }
     
     // Set active badge in DOM and set proportion variables on Photon if needed
-    setProportions = (proportionList: QueryList<any>, activeId: string, propType: PropType='none', notifyTitle:string ='') => {
-        proportionList.forEach(proportion => {
-            if (proportion.nativeElement.id == activeId) {
-                this.renderer.addClass(proportion.nativeElement, 'active');
-                if (propType != 'none') {this.photon.callFunction('setSizes', `${propType},${proportion.nativeElement.id}`, notifyTitle).subscribe()}
-            } else {
-                this.renderer.removeClass(proportion.nativeElement, 'active')
-            } 
-        })
+    setProportions = (propType: PropType, propSize:string, notifyTitle:string ='') => {
+        this.photon.callFunction('setSizes', `${propType},${propSize}`, notifyTitle).subscribe(() => this.getProportions())
     }
 
     // Get interval values from Photon
