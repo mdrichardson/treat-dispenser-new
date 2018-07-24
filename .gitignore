@@ -37,3 +37,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Temporaryily ignore stored auth credentials
+
+/src/app/database.service.ts
