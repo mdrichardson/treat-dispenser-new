@@ -39,5 +39,4 @@ testem.log
 Thumbs.db
 
 # Temporaryily ignore stored auth credentials
-
 /src/app/database.service.ts
