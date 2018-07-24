@@ -9,7 +9,7 @@ interface scheduleInterface {
         {t1: {
             on: boolean,
             time: Date,
-            size: string
+            size: string // 0 for treat, 1 for meal
         }},
         {t2: {
             on: boolean,
@@ -68,7 +68,7 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                 times: [
                     {t1: {
                         on: info.t1on.toString() == "1" ? true : false,
-                        size: info.t1s,
+                        size: info.t1s, 
                         time: new Date(2018, 0, 1, 
                             parseInt(t1_time.slice(0, 2)), // Hours
                             parseInt(t1_time.slice(2, 4))), //Minutes
@@ -109,10 +109,12 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
             case 't1':
             case 't2':
             case 't3':
-                let hours = parseInt(moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('HH'));
-                let minutes = moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('mm');
-                notifyTitle = notifyTitle + hours.toString() + minutes;
-                commandValue = `${hours}${minutes}`;
+                if (commandValue != '0' && commandValue != '1') {
+                    let hours = parseInt(moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('HH'));
+                    let minutes = moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('mm');
+                    notifyTitle = notifyTitle + hours.toString() + minutes;
+                    commandValue = `${hours}${minutes}`;
+                }
                 break;
             case 'on':
                 switch(commandValue) {
