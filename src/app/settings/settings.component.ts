@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Renderer2 } from '@angular/core';
 import { PhotonService } from '../photon.service';
-import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 
 declare type PropType = 'none' | 'treat' | 'meal';
@@ -13,33 +12,6 @@ interface intervalsInterface {
     immediate: boolean,
     start: Date,
     end: Date,
-}
-
-interface scheduleInterface {
-    time1: {
-        on: boolean,
-        time: string,
-        size: string
-    },
-    time2: {
-        on: boolean,
-        time: string,
-        size: string
-    },
-    time3: {
-        on: boolean,
-        time: string,
-        size: string
-    },
-    days: {
-        sun: boolean,
-        mon: boolean,
-        tue: boolean,
-        wed: boolean,
-        thu: boolean,
-        fri: boolean,
-        sat: boolean,
-    }
 }
 
 @Component({
@@ -55,8 +27,6 @@ export class SettingsComponent implements OnInit, AfterViewInit {
 
     public intervals = <intervalsInterface>{};
     private intervalsWarning: boolean;
-
-    public schedule = <scheduleInterface>{};
 
     @ViewChildren('treatProportion') treatProportions: QueryList<any>;
     @ViewChildren('mealProportion') mealProportions: QueryList<any>;
@@ -157,54 +127,11 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         }
     }
 
-    // Get Schedule values from Photon
-    getSchedule = () => {
-        forkJoin([
-            this.photon.getVariable('scheduleInfo'),
-            this.photon.getVariable('scheduleDays')
-        ]).subscribe(response => {
-            let info = JSON.parse(response['0'].toString());
-            let days = JSON.parse(response['1'].toString());
-            this.schedule = {
-                time1: {
-                    on: info.t1on,
-                    time: info.t1,
-                    size: info.t1s
-                },
-                time2: {
-                    on: info.t2on,
-                    time: info.t2,
-                    size: info.t2s
-                },
-                time3: {
-                    on: info.t3on,
-                    time: info.t3,
-                    size: info.t3s
-                },
-                days: {
-                    sun: days.sun,
-                    mon: days.mon,
-                    tue: days.tue,
-                    wed: days.wed,
-                    thu: days.thu,
-                    fri: days.fri,
-                    sat: days.sat,
-                }
-            }
-        })
-    }
-
-    // Set schedule values on the Photon
-    setSchedule = (commandName: string, commandValue: string, notifyTitle: string='') => {
-        
-    }
-
     ngOnInit() {
     }
 
     ngAfterViewInit() {
         this.getProportions();
         this.getIntervals();
-        this.getSchedule();
     }
 }

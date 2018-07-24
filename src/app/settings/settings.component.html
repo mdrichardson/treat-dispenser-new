@@ -94,27 +94,7 @@
             </div>
         </div>
         <h3>Dispense At:</h3>
-        <div id="schedule-times">
-            <div id="time-1">
-                <h4>Time 1</h4>
-                <label><input type="checkbox" [checked]="intervals.on" (change)="intervals.on = !intervals.on" (click)="setIntervals('on', 'intervals', 'Turning Interval ')"></label>
-                <div>
-                    <label>
-                        Dispense at:
-                        <input [owlDateTimeTrigger]="scheduleTime1" [owlDateTime]="scheduleTime1">
-                        <owl-date-time #scheduleTime1 [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervalStartDefault"></owl-date-time>
-                    </label>
-                </div>
-                <div>
-                    <h5>Size:</h5>
-                    <div class="proportions grid-container">
-                        <div #time1Proportion id="0" (click)="setProportions(time1Proportions, '0', 'treat', 'Treat Size S')">S</div>
-                        <div #time1Proportion id="1" (click)="setProportions(time1Proportions, '1', 'treat', 'Treat Size M')">M</div>
-                        <div #time1Proportion id="2" (click)="setProportions(time1Proportions, '2', 'treat', 'Treat Size L')">L</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <app-schedule-times></app-schedule-times>
     </div>
 </div>
 
