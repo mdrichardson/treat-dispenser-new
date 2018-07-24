@@ -12,6 +12,7 @@ export interface userInterface {
 @Injectable({
   providedIn: 'root'
 })
+
 export class DatabaseService {
      constructor() { }
 

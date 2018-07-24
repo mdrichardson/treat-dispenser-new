@@ -1,0 +1,17 @@
+.proportions {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 30px);
+    grid-gap: 3px;
+
+    div {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 20px;
+    }
+
+    .active {
+        background-color: lightblue;
+    }
+}
+
