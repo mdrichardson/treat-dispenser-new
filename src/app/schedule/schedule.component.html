@@ -24,7 +24,7 @@
                     <div>
                         <label>
                             Dispense at:
-                            <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime" [(ngModel)]="timeObj['t'+(i+1)].time" (click)="test(timeObj['t'+(i+1)].time)">
+                            <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime" [(ngModel)]="timeObj['t'+(i+1)].time" (dateTimeChange)="setSchedule('t'+(i+1), '', 'Schedule Time '+(i+1)+': ')">
                             <owl-date-time  #scheduleTime [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="timeObj['t'+(i+1)].time"></owl-date-time>
                         </label>
                     </div>

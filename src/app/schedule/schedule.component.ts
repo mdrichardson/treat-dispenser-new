@@ -105,8 +105,15 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
     // Set schedule values on the Photon
     setSchedule = (commandName: string, commandValue: string='', notifyTitle: string='') => {
         var functionArg;
-        console.log('received ' + commandName + ' ' + commandValue)
         switch(commandName) {
+            case 't1':
+            case 't2':
+            case 't3':
+                let hours = parseInt(moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('HH'));
+                let minutes = moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('mm');
+                notifyTitle = notifyTitle + hours.toString() + minutes;
+                commandValue = `${hours}${minutes}`;
+                break;
             case 'on':
                 switch(commandValue) {
                     case 'schedule':
@@ -117,19 +124,20 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                     case 't2':
                     case 't3':
                         commandName = commandValue + 'on';
-                        notifyTitle = this.schedule.times[Number(commandValue.slice(1)) - 1][commandValue].on ? notifyTitle + (Number(commandValue.slice(1)) - 1).toString() +'Off' : notifyTitle + 'On';
+                        notifyTitle = this.schedule.times[Number(commandValue.slice(1)) - 1][commandValue].on ? notifyTitle + commandValue.slice(1) +' Off' : notifyTitle + commandValue.slice(1) + ' On';
                         commandValue = this.schedule.times[Number(commandValue.slice(1)) - 1][commandValue].on ? '0' : '1'; // Toggle time1, etc
-                        
                         break;
                     default: // For days
                         commandName = commandValue;
-                        notifyTitle = this.schedule.days[commandValue].on ? notifyTitle + 'Off' : notifyTitle + 'On';
-                        commandValue = this.schedule.days[commandValue].on ? '0' : '1'; // Toggle day on/off
+                        notifyTitle = this.schedule.days[commandValue] ? notifyTitle + 'Off' : notifyTitle + 'On';
+                        commandValue = this.schedule.days[commandValue] ? '0' : '1'; // Toggle day on/off
+                        console.log(this.schedule.days[commandName], commandValue)
                         break;
                 }
-                functionArg = `${commandName},${commandValue}`;
-                console.log('command: ' + functionArg);
         }
+        functionArg = `${commandName},${commandValue}`;
+        this.photon.callFunction("setSchedule", functionArg, notifyTitle)
+            .subscribe(() => this.getSchedule()) // Make sure we're working with correct data by getting variables again
     }
 
     test(cmd) {

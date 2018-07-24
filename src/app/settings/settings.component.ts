@@ -103,11 +103,8 @@ export class SettingsComponent implements OnInit, AfterViewInit {
                 functionArg = `${commandName},${hours}${minutes}`;
                 break;
             case 'on':
-                switch(commandValue) {
-                    case 'intervals':
-                    commandValue = this.intervals.on ? '0' : '1' // Toggle the intervals
-                    notifyTitle = this.intervals.on ? notifyTitle + 'Off' : notifyTitle + 'On'
-                }
+                commandValue = this.intervals.on ? '0' : '1' // Toggle the intervals
+                notifyTitle = this.intervals.on ? notifyTitle + 'Off' : notifyTitle + 'On'
                 break;
             case 'immediate':
                 commandValue = this.intervals.immediate ? '0' : '1' // Toggle immediate dispensing
