@@ -194,6 +194,11 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         })
     }
 
+    // Set schedule values on the Photon
+    setSchedule = (commandName: string, commandValue: string, notifyTitle: string='') => {
+        
+    }
+
     ngOnInit() {
     }
 
