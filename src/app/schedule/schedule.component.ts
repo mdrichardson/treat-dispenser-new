@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { PhotonService } from '../photon.service';
 import * as moment from 'moment';
@@ -43,7 +43,9 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
 
     public schedule = <scheduleInterface>{ times:[], days:{}};
 
-    constructor(private renderer: Renderer2, private photon: PhotonService) { }
+    @ViewChildren('size') timeSizes: QueryList<any>;
+
+    constructor(private photon: PhotonService) { }
 
     // Get Schedule values from Photon
     getSchedule = () => {
@@ -109,6 +111,7 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
             case 't1':
             case 't2':
             case 't3':
+                console.log()
                 if (commandValue != '0' && commandValue != '1') {
                     let hours = parseInt(moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('HH'));
                     let minutes = moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('mm');
@@ -138,12 +141,9 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                 }
         }
         functionArg = `${commandName},${commandValue}`;
+        console.log(functionArg)
         this.photon.callFunction("setSchedule", functionArg, notifyTitle)
             .subscribe(() => this.getSchedule()) // Make sure we're working with correct data by getting variables again
-    }
-
-    test(cmd) {
-        console.log(cmd)
     }
 
     ngOnInit() {

@@ -1,0 +1,9 @@
+@import '../settings/settings.component';
+
+.active {
+    @extend .active;
+}
+
+.proportions {
+    @extend .proportions;
+}
