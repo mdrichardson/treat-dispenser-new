@@ -75,28 +75,7 @@
         <label><input type="checkbox" [checked]="intervals.immediate" (change)="intervals.immediate = !intervals.immediate" (click)="setIntervals('immediate', '', 'Immediate ')">Dispense immediately upon settings change<span *ngIf="intervals.SEon"> (if within time window)</span></label>
     </div>
 </div>
-<div class="grid-container">
-    <!-- <label><input type="checkbox" [checked]="schedule.on" (change)="schedule.on = !schedule.on" (click)="setSchedule('on', 'schedule', 'Turning Schedule ')"></label> -->
-    <div>
-        <h2>Scheduled Meal Dispensing</h2>
-        <h3>Dispense Meals On:</h3>
-        <div #days>
-            <div>
-                <div><input #schedSun type="checkbox"><label for="schedSun">Sunday</label></div>
-                <div><input #schedMon type="checkbox"><label for="schedMon">Monday</label></div>
-                <div><input #schedTue type="checkbox"><label for="schedTue">Tuesday</label></div>
-                <div><input #schedWed type="checkbox"><label for="schedWed">Wednesday</label></div>
-            </div>
-            <div>
-                <div><input #schedThu type="checkbox"><label for="schedThu">Thursday</label></div>
-                <div><input #schedFri type="checkbox"><label for="schedFri">Friday</label></div>
-                <div><input #schedSat type="checkbox"><label for="schedSat">Saturday</label></div>
-            </div>
-        </div>
-        <h3>Dispense At:</h3>
-        <app-schedule-times></app-schedule-times>
-    </div>
-</div>
+<app-schedule></app-schedule>
 
 
 

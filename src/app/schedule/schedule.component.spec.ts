@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduleTimesComponent } from './schedule-times.component';
+import { ScheduleTimesComponent } from './schedule.component';
 
 describe('ScheduleTimesComponent', () => {
   let component: ScheduleTimesComponent;

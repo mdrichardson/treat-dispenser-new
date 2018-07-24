@@ -1,0 +1,41 @@
+<div class="grid-container">
+    <label><input type="checkbox" [checked]="schedule.on" (change)="schedule.on = !schedule.on" (click)="setSchedule('on', 'schedule', 'Turning Schedule ')"></label>
+    <div>
+        <h2>Scheduled Meal Dispensing</h2>
+        <h3>Dispense Meals On:</h3>
+        <div #days>
+            <div>
+                <div><input #schedSun type="checkbox"><label for="schedSun">Sunday</label></div>
+                <div><input #schedMon type="checkbox"><label for="schedMon">Monday</label></div>
+                <div><input #schedTue type="checkbox"><label for="schedTue">Tuesday</label></div>
+                <div><input #schedWed type="checkbox"><label for="schedWed">Wednesday</label></div>
+            </div>
+            <div>
+                <div><input #schedThu type="checkbox"><label for="schedThu">Thursday</label></div>
+                <div><input #schedFri type="checkbox"><label for="schedFri">Friday</label></div>
+                <div><input #schedSat type="checkbox"><label for="schedSat">Saturday</label></div>
+            </div>
+        </div>
+        <h3>Dispense At:</h3>
+        <div>
+            <div *ngFor="let time of schedule.times; let i = index">
+                    <h4>Time {{ i + 1 }}</h4>
+                    <label><input type="checkbox" [checked]="time.on" (change)="time.on = !time.on" (click)="setSchedule('on', 't'+(i+1), 'Turning Time ')"></label>
+                    <div>
+                        <label>
+                            Dispense at:
+                            <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime">
+                            <owl-date-time  #scheduleTime [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]=""></owl-date-time>
+                        </label>
+                    </div>
+                    <div>
+                        <h5>Size:</h5>
+                        <div class="proportions grid-container">
+                            <div id="0" (click)="console.log(1)">Treat</div>
+                            <div id="1" (click)="setProportions('', '1', 'treat', 'Treat Size M')">Meal</div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
