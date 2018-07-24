@@ -72,7 +72,7 @@
             </select>
         </div>
         <br />
-        <label><input type="checkbox" [checked]="intervals.immediate">Dispense immediately upon settings change<span *ngIf="intervals.SEon"> (if within time window)</span></label>
+        <label><input type="checkbox" [checked]="intervals.immediate" (change)="intervals.immediate = !intervals.immediate" (click)="setIntervals('immediate', '', 'Immediate ')">Dispense immediately upon settings change<span *ngIf="intervals.SEon"> (if within time window)</span></label>
     </div>
 </div>
 <div #scheduled>
