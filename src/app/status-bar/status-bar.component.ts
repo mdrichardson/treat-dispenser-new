@@ -35,7 +35,7 @@ export class StatusBarComponent implements OnInit, OnDestroy {
         setInterval((() => 
         {
             this.photon.getVariable('last')
-            .subscribe(data => this.last = data)
+            .subscribe(data => this.last = data.toString())
             })(), 20000); // () makes it call immediately, then every 20 seconds
     }
 

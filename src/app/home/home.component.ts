@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
         this.video = this.user.videoUrl + this.user.videoAuthToken;
     }
 
-    treat = () =>this.photon.callFunction('auger', 'treat', 'Treat');
-    meal = () => this.photon.callFunction('auger', 'meal', 'Meal');
+    treat = () =>this.photon.callFunction('auger', 'treat', 'Treat').subscribe();
+    meal = () => this.photon.callFunction('auger', 'meal', 'Meal').subscribe();
 
     ngOnInit() {
 
