@@ -1,17 +1,45 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Renderer2 } from '@angular/core';
 import { PhotonService } from '../photon.service';
+import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 
 declare type PropType = 'none' | 'treat' | 'meal';
 
-export interface intervalsInterface {
-    on?: boolean,
-    SEon?: boolean,
-    start?: Date,
-    end?: Date,
-    hours?: string,
-    minutes?: string,
-    immediate?: boolean
+interface intervalsInterface {
+    on: boolean,
+    SEon: boolean,
+    hours: string,
+    minutes: string,
+    immediate: boolean,
+    start: Date,
+    end: Date,
+}
+
+interface scheduleInterface {
+    time1: {
+        on: boolean,
+        time: string,
+        size: string
+    },
+    time2: {
+        on: boolean,
+        time: string,
+        size: string
+    },
+    time3: {
+        on: boolean,
+        time: string,
+        size: string
+    },
+    days: {
+        sun: boolean,
+        mon: boolean,
+        tue: boolean,
+        wed: boolean,
+        thu: boolean,
+        fri: boolean,
+        sat: boolean,
+    }
 }
 
 @Component({
@@ -25,8 +53,10 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     public treatSize: string;
     public mealSize: string;
 
-    public intervals: intervalsInterface = {};
+    public intervals = <intervalsInterface>{};
     private intervalsWarning: boolean;
+
+    public schedule = <scheduleInterface>{};
 
     @ViewChildren('treatProportion') treatProportions: QueryList<any>;
     @ViewChildren('mealProportion') mealProportions: QueryList<any>;
@@ -63,11 +93,6 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         this.photon.getVariable('intervals')
         .subscribe(response => {
             let resp_intervals = JSON.parse(response.toString());
-            this.intervals.on = resp_intervals.on.toString() == "1" ? true : false;
-            this.intervals.SEon = resp_intervals.SE.toString() == "1" ? true : false;
-            this.intervals.minutes = resp_intervals.min.toString();
-            this.intervals.hours = resp_intervals.hr.toString();
-            this.intervals.immediate = resp_intervals.imm.toString() == "1" ? true : false
             // Deal with 24-hour time format from Photon
             let intervalStart_tmp = resp_intervals.start.toString().length == 3 
                                     ? `0${resp_intervals.start.toString()}` 
@@ -75,22 +100,30 @@ export class SettingsComponent implements OnInit, AfterViewInit {
             let intervalEnd_tmp = resp_intervals.end.toString().length == 3 
                                     ? `0${resp_intervals.end.toString()}` // For '0*00' hours
                                     : resp_intervals.end.toString();
-            this.intervals.start = new Date(2018, 0, 1, 
-                                    parseInt(intervalStart_tmp.slice(0, 2)), // Hours
-                                    parseInt(intervalStart_tmp.slice(2, 4))); //Minutes
-            this.intervals.end = new Date(2018, 0, 1, 
-                                    parseInt(intervalEnd_tmp.slice(0, 2)), // Hours
-                                    parseInt(intervalEnd_tmp.slice(2, 4))); // Minutes
+            this.intervals = {
+                on: resp_intervals.on.toString() == "1" ? true : false,
+                SEon: resp_intervals.SE.toString() == "1" ? true : false,
+                hours: resp_intervals.hr.toString(),
+                minutes: resp_intervals.min.toString(),
+                immediate: resp_intervals.imm.toString() == "1" ? true : false,
+                start: new Date(2018, 0, 1, 
+                        parseInt(intervalStart_tmp.slice(0, 2)), // Hours
+                        parseInt(intervalStart_tmp.slice(2, 4))), //Minutes
+                end: new Date(2018, 0, 1, 
+                    parseInt(intervalEnd_tmp.slice(0, 2)), // Hours
+                    parseInt(intervalEnd_tmp.slice(2, 4))), // Minutes
+            }
         })
     }
 
+    // Set Interval values on Photon
     setIntervals = (commandName: string, commandValue: string, notifyTitle: string='') => {
         var functionArg;
         var hours;
         var minutes;
         switch(commandName) {
             case 'start':
-                hours = parseInt(moment(this.intervals.start).format('HH'));
+                hours = parseInt(moment(this.intervals['start']).format('HH'));
                 minutes = moment(this.intervals.start).format('mm');
                 functionArg = `${commandName},${hours}${minutes}`;
                 break;
@@ -124,7 +157,42 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         }
     }
 
-    test = () => console.log("test worked")
+    // Get Schedule values from Photon
+    getSchedule = () => {
+        forkJoin([
+            this.photon.getVariable('scheduleInfo'),
+            this.photon.getVariable('scheduleDays')
+        ]).subscribe(response => {
+            let info = JSON.parse(response['0'].toString());
+            let days = JSON.parse(response['1'].toString());
+            this.schedule = {
+                time1: {
+                    on: info.t1on,
+                    time: info.t1,
+                    size: info.t1s
+                },
+                time2: {
+                    on: info.t2on,
+                    time: info.t2,
+                    size: info.t2s
+                },
+                time3: {
+                    on: info.t3on,
+                    time: info.t3,
+                    size: info.t3s
+                },
+                days: {
+                    sun: days.sun,
+                    mon: days.mon,
+                    tue: days.tue,
+                    wed: days.wed,
+                    thu: days.thu,
+                    fri: days.fri,
+                    sat: days.sat,
+                }
+            }
+        })
+    }
 
     ngOnInit() {
     }
@@ -132,5 +200,6 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.getProportions();
         this.getIntervals();
+        this.getSchedule();
     }
 }
