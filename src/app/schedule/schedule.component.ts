@@ -41,7 +41,7 @@ interface scheduleInterface {
 
 export class ScheduleTimesComponent implements OnInit, AfterViewInit {
 
-    public schedule = <scheduleInterface>{};
+    public schedule = <scheduleInterface>{ times:[], days:{}};
 
     constructor(private renderer: Renderer2, private photon: PhotonService) { }
 
@@ -98,20 +98,31 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
 
     // Set schedule values on the Photon
     setSchedule = (commandName: string, commandValue: string='', notifyTitle: string='') => {
+        var functionArg;
         console.log('received ' + commandName + ' ' + commandValue)
         switch(commandName) {
             case 'on':
                 switch(commandValue) {
                     case 'schedule':
-                        commandValue = this.schedule.on ? '0' : '1' // Toggle the schedule
+                        commandValue = this.schedule.on ? '0' : '1'; // Toggle the schedule
+                        notifyTitle = this.schedule.on ? notifyTitle + 'Off' : notifyTitle + 'On';
                         break;
-                    default:
+                    case 't1':
+                    case 't2':
+                    case 't3':
                         commandName = commandValue + 'on';
-                        commandValue = this.schedule.times[Number(commandValue.slice(1)) - 1][commandValue].on ? '0' : '1' // Toggle time1, etc
+                        notifyTitle = this.schedule.times[Number(commandValue.slice(1)) - 1][commandValue].on ? notifyTitle + (Number(commandValue.slice(1)) - 1).toString() +'Off' : notifyTitle + 'On';
+                        commandValue = this.schedule.times[Number(commandValue.slice(1)) - 1][commandValue].on ? '0' : '1'; // Toggle time1, etc
+                        
+                        break;
+                    default: // For days
+                        commandName = commandValue;
+                        notifyTitle = this.schedule.days[commandValue].on ? notifyTitle + 'Off' : notifyTitle + 'On';
+                        commandValue = this.schedule.days[commandValue].on ? '0' : '1'; // Toggle day on/off
                         break;
                 }
-
-                console.log(commandName)
+                functionArg = `${commandName},${commandValue}`;
+                console.log('command: ' + functionArg);
         }
     }
 

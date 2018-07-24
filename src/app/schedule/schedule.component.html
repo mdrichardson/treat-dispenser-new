@@ -3,17 +3,17 @@
     <div>
         <h2>Scheduled Meal Dispensing</h2>
         <h3>Dispense Meals On:</h3>
-        <div #days>
+        <div id="days">
             <div>
-                <div><input #schedSun type="checkbox"><label for="schedSun">Sunday</label></div>
-                <div><input #schedMon type="checkbox"><label for="schedMon">Monday</label></div>
-                <div><input #schedTue type="checkbox"><label for="schedTue">Tuesday</label></div>
-                <div><input #schedWed type="checkbox"><label for="schedWed">Wednesday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.sun" (change)="schedule.days.sun = !schedule.days.sun" (click)="setSchedule('on', 'sun', 'Turning Sunday ')"><label for="schedSun">Sunday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.mon" (change)="schedule.days.mon = !schedule.days.mon" (click)="setSchedule('on', 'mon', 'Turning Monday ')"><label for="schedMon">Monday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.tue" (change)="schedule.days.tue = !schedule.days.tue" (click)="setSchedule('on', 'tue', 'Turning Tuesday ')"><label for="schedTue">Tuesday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.wed" (change)="schedule.days.wed = !schedule.days.wed" (click)="setSchedule('on', 'wed', 'Turning Wednesday ')"><label for="schedWed">Wednesday</label></div>
             </div>
             <div>
-                <div><input #schedThu type="checkbox"><label for="schedThu">Thursday</label></div>
-                <div><input #schedFri type="checkbox"><label for="schedFri">Friday</label></div>
-                <div><input #schedSat type="checkbox"><label for="schedSat">Saturday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.thu" (change)="schedule.days.thu = !schedule.days.thu" (click)="setSchedule('on', 'thu', 'Turning Thursday ')"><label for="schedThu">Thursday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.fri" (change)="schedule.days.fri = !schedule.days.fri" (click)="setSchedule('on', 'fri', 'Turning Friday ')"><label for="schedFri">Friday</label></div>
+                <div><input type="checkbox" [checked]="schedule.days.sat" (change)="schedule.days.sat = !schedule.days.sat" (click)="setSchedule('on', 'sat', 'Turning Saturday ')"><label for="schedSat">Saturday</label></div>
             </div>
         </div>
         <h3>Dispense At:</h3>
