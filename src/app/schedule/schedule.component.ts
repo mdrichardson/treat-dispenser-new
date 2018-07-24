@@ -8,17 +8,17 @@ interface scheduleInterface {
     times: [
         {t1: {
             on: boolean,
-            time: string,
+            time: Date,
             size: string
         }},
         {t2: {
             on: boolean,
-            time: string,
+            time: Date,
             size: string
         }},
         {t3: {
             on: boolean,
-            time: string,
+            time: Date,
             size: string
         }}
     ]
@@ -54,32 +54,38 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
             let info = JSON.parse(response['0'].toString());
             let days = JSON.parse(response['1'].toString());
             // Deal with 24-hour time format from Photon
-            let t1 = info.t1.toString().length == 3 
+            let t1_time = info.t1.toString().length == 3 
                                     ? `0${info.t1.toString()}` 
                                     : info.t1.toString();
-            let t2 = info.t1.toString().length == 3 
-                                    ? `0${info.t1.toString()}` 
-                                    : info.t1.toString();
-            let t3 = info.t1.toString().length == 3 
-                                    ? `0${info.t1.toString()}` 
-                                    : info.t1.toString();
+            let t2_time = info.t2.toString().length == 3 
+                                    ? `0${info.t2.toString()}` 
+                                    : info.t2.toString();
+            let t3_time = info.t3.toString().length == 3 
+                                    ? `0${info.t3.toString()}` 
+                                    : info.t3.toString();
             this.schedule = {
                 on: info.on.toString() == "1" ? true : false,
                 times: [
                     {t1: {
                         on: info.t1on.toString() == "1" ? true : false,
-                        time: t1,
-                        size: info.t1s
+                        size: info.t1s,
+                        time: new Date(2018, 0, 1, 
+                            parseInt(t1_time.slice(0, 2)), // Hours
+                            parseInt(t1_time.slice(2, 4))), //Minutes
                     }},
                     {t2: {
                         on: info.t2on.toString() == "1" ? true : false,
-                        time: t2,
-                        size: info.t2s
+                        size: info.t2s,
+                        time: new Date(2018, 0, 1, 
+                            parseInt(t2_time.slice(0, 2)), // Hours
+                            parseInt(t2_time.slice(2, 4))), //Minutes
                     }},
                     {t3: {
                         on: info.t3on.toString() == "1" ? true : false,
-                        time: t3,
-                        size: info.t3s
+                        size: info.t3s,
+                        time: new Date(2018, 0, 1, 
+                            parseInt(t3_time.slice(0, 2)), // Hours
+                            parseInt(t3_time.slice(2, 4))), //Minutes
                     }},
                 ],
                 days: {
@@ -124,6 +130,10 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                 functionArg = `${commandName},${commandValue}`;
                 console.log('command: ' + functionArg);
         }
+    }
+
+    test(cmd) {
+        console.log(cmd)
     }
 
     ngOnInit() {

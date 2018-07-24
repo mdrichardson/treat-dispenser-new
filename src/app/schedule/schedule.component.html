@@ -18,14 +18,14 @@
         </div>
         <h3>Dispense At:</h3>
         <div>
-            <div *ngFor="let time of schedule.times; let i = index">
+            <div *ngFor="let timeObj of schedule.times; let i = index"> <!--We have to use ['t'+(i+1)] to convert from index to t* in the interface-->
                     <h4>Time {{ i + 1 }}</h4>
-                    <label><input type="checkbox" [checked]="time.on" (change)="time.on = !time.on" (click)="setSchedule('on', 't'+(i+1), 'Turning Time ')"></label>
+                    <label><input type="checkbox" [checked]="timeObj['t'+(i+1)].on" (change)="timeObj['t'+(i+1)].on = !timeObj['t'+(i+1)].on" (click)="setSchedule('on', 't'+(i+1), 'Turning Time ')"></label>
                     <div>
                         <label>
                             Dispense at:
-                            <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime">
-                            <owl-date-time  #scheduleTime [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]=""></owl-date-time>
+                            <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime" [(ngModel)]="timeObj['t'+(i+1)].time" (click)="test(timeObj['t'+(i+1)].time)">
+                            <owl-date-time  #scheduleTime [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="timeObj['t'+(i+1)].time"></owl-date-time>
                         </label>
                     </div>
                     <div>
