@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Renderer2 } from '@angular/core';
 import { PhotonService } from '../photon.service';
+import * as moment from 'moment';
 
 declare type PropType = 'none' | 'treat' | 'meal';
 
@@ -25,6 +26,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     public mealSize: string;
 
     public intervals: intervalsInterface = {};
+    private intervalsWarning: boolean;
 
     @ViewChildren('treatProportion') treatProportions: QueryList<any>;
     @ViewChildren('mealProportion') mealProportions: QueryList<any>;
@@ -49,7 +51,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         proportionList.forEach(proportion => {
             if (proportion.nativeElement.id == activeId) {
                 this.renderer.addClass(proportion.nativeElement, 'active');
-                if (propType != 'none') {this.photon.callFunction('setSizes', `${propType},${proportion.nativeElement.id}`, notifyTitle)}
+                if (propType != 'none') {this.photon.callFunction('setSizes', `${propType},${proportion.nativeElement.id}`, notifyTitle).subscribe()}
             } else {
                 this.renderer.removeClass(proportion.nativeElement, 'active')
             } 
@@ -67,20 +69,58 @@ export class SettingsComponent implements OnInit, AfterViewInit {
             this.intervals.hours = resp_intervals.hr.toString();
             this.intervals.immediate = resp_intervals.imm.toString() == "1" ? true : false
             // Deal with 24-hour time format from Photon
-            let intervalStart_tmp = (resp_intervals.start.toString().length) == 3 ? `0${resp_intervals.start.toString()}` : resp_intervals.start.toString();
-            let intervalEnd_tmp = (resp_intervals.end.toString().length) == 3 ? `0${resp_intervals.end.toString()}` : resp_intervals.end.toString();
-            this.intervals.start = new Date(2018, 0, 1, parseInt(intervalStart_tmp.substring(0, 2)), parseInt(intervalStart_tmp.substring(2, 4)));
-            this.intervals.end = new Date(2018, 0, 1, parseInt(intervalEnd_tmp.substring(0, 2)), parseInt(intervalEnd_tmp.substring(2, 4)));
+            let intervalStart_tmp = resp_intervals.start.toString().length == 3 
+                                    ? `0${resp_intervals.start.toString()}` 
+                                    : resp_intervals.start.toString();
+            let intervalEnd_tmp = resp_intervals.end.toString().length == 3 
+                                    ? `0${resp_intervals.end.toString()}` // For '0*00' hours
+                                    : resp_intervals.end.toString();
+            this.intervals.start = new Date(2018, 0, 1, 
+                                    parseInt(intervalStart_tmp.slice(0, 2)), // Hours
+                                    parseInt(intervalStart_tmp.slice(2, 4))); //Minutes
+            this.intervals.end = new Date(2018, 0, 1, 
+                                    parseInt(intervalEnd_tmp.slice(0, 2)), // Hours
+                                    parseInt(intervalEnd_tmp.slice(2, 4))); // Minutes
         })
     }
 
-    setIntervals = (command: string, notifyTitle: string='') => {
-        this.photon.callFunction("setInterval", command, notifyTitle)
-        .subscribe(response => {})
-
-        this.getIntervals();
-        console.log(this.intervals.SEon);
+    setIntervals = (commandName: string, commandValue: string, notifyTitle: string='') => {
+        var functionArg;
+        var hours;
+        var minutes;
+        switch(commandName) {
+            case 'start':
+                hours = parseInt(moment(this.intervals.start).format('HH'));
+                minutes = moment(this.intervals.start).format('mm');
+                functionArg = `${commandName},${hours}${minutes}`;
+                break;
+            case 'end':
+                hours = moment(this.intervals.end).format('HH');
+                minutes = moment(this.intervals.end).format('mm');
+                functionArg = `${commandName},${hours}${minutes}`;
+                break;
+            case 'on':
+                switch(commandValue) {
+                    case 'intervals':
+                    commandValue = this.intervals.on ? '0' : '1' // Toggle the intervals
+                    notifyTitle = this.intervals.on ? notifyTitle + 'Off' : notifyTitle + 'On'
+                }
+            default:
+                functionArg = `${commandName},${commandValue}`;
+                break;
+        }
+        // Make sure Start occurs before End
+        let dateCompare = moment(new Date(2018, 0, 1, hours, minutes));
+        if (moment(this.intervals.end) <= dateCompare && moment(this.intervals.start) >= dateCompare) {
+            this.intervalsWarning = true;
+        } else {
+            this.intervalsWarning = false;
+            this.photon.callFunction("setInterval", functionArg, notifyTitle)
+                .subscribe(() => this.getIntervals()) // Make sure we're working with correct data by getting variables again
+        }
     }
+
+    test = () => console.log("test worked")
 
     ngOnInit() {
     }

@@ -15,63 +15,65 @@
         <div #mealProportion id="2" (click)="setProportions(treatProportions, '2', 'meal', 'Meal Size L')">L</div>
     </div>
 </div>
-<div>
-    <h2>Interval Treat Dispensing</h2>
-    <div>
-        <input #interval type="radio" id="0" [checked]="!intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon,0', 'Continuous Interval')"><label>Run Continuously</label>
-    </div>
-    <div>
-        <input #interval type="radio" id="1" [checked]="intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon,1', 'Scheduled Interval')"><label>Run Only Within Time Period</label>
-    </div>
-    <br />
-    <div *ngIf="!intervals.SEon">
+<div class="grid-container" id="intervals">
+    <label><input type="checkbox" [checked]="intervals.on" (change)="intervals.on = !intervals.on" (click)="setIntervals('on', 'intervals', 'Turning Interval ')"></label>
+    <div id="interval-container">
         <div>
-            <label>
-                    Start Time
-                    <input [owlDateTimeTrigger]="intervalStartInput" [owlDateTime]="intervalStartInput" [(ngModel)]="intervals.start">
-                    <owl-date-time #intervalStartInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.start"></owl-date-time>
+            <input #interval type="radio" id="0" [checked]="!intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon', 0, 'Continuous Interval')"><label>Run Continuously</label>
+        </div>
+        <div>
+            <input #interval type="radio" id="1" [checked]="intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon', 1, 'Scheduled Interval')"><label>Run Only Within Time Period</label>
+        </div>
+        <div *ngIf="intervals.SEon">
+            <br />
+            <div>
+                <label>
+                        Start Time
+                        <input [owlDateTimeTrigger]="intervalStartInput" [owlDateTime]="intervalStartInput" [(ngModel)]="intervals.start" (dateTimeChange)="setIntervals('start', '', 'Interval Start')">
+                        <owl-date-time #intervalStartInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.start"></owl-date-time>
+                    </label>
+            </div>
+            <div>
+                <label>
+                    End Time
+                    <input [owlDateTimeTrigger]="intervalEndInput" [owlDateTime]="intervalEndInput" [(ngModel)]="intervals.end" (dateTimeChange)="setIntervals('end', '', 'Interval End')">
+                    <owl-date-time #intervalEndInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.end"></owl-date-time>
                 </label>
+            </div>
+            <p *ngIf="intervalsWarning">Error: Start must occur before End</p>
+        </div>
+        <h3>Dispense Treat Every:</h3>
+        <div>
+            <label>Hours: </label>
+            <select [(ngModel)]="intervals.hours">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+            </select>
         </div>
         <div>
-            <label>
-                End Time
-                <input [owlDateTimeTrigger]="intervalEndInput" [owlDateTime]="intervalEndInput" [(ngModel)]="intervals.end">
-                <owl-date-time #intervalEndInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.end"></owl-date-time>
-            </label>
+            <label>Minutes: </label>
+            <select [(ngModel)]="intervals.minutes">
+                <option>0</option>
+                <option>5</option>
+                <option>15</option>
+                <option>30</option>
+                <option>45</option>
+            </select>
         </div>
+        <br />
+        <label><input type="checkbox" [checked]="intervals.immediate">Dispense immediately upon settings change<span *ngIf="intervals.SEon"> (if within time window)</span></label>
     </div>
-        
-    <h3>Dispense Treat Every:</h3>
-    <div>
-        <label>Hours: </label>
-        <select [(ngModel)]="intervals.hours">
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-        </select>
-    </div>
-    <div>
-        <label>Minutes: </label>
-        <select [(ngModel)]="intervals.minutes">
-            <option>0</option>
-            <option>5</option>
-            <option>15</option>
-            <option>30</option>
-            <option>45</option>
-        </select>
-    </div>
-    <br />
-    <label><input type="checkbox" [checked]="intervals.immediate">Dispense immediately upon settings change (if within time window)</label>
 </div>
 <div #scheduled>
     <h2>Scheduled Meal Dispensing</h2>

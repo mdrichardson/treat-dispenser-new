@@ -52,11 +52,11 @@ export const MY_MOMENT_FORMATS = {
             }
           },
         behaviour: {
-            autoHide: 3000,
+            autoHide: 2500,
             onClick: 'hide',
             onMouseover: 'pauseAutoHide',
             showDismissButton: true,
-            stacking: 4
+            stacking: 2
           },
     }),
     OwlDateTimeModule, 

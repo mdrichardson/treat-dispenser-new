@@ -113,7 +113,8 @@ export class PhotonService {
                 error => {
                     this.throwError(error, notifyTitle);
                     return error;
-                }}))
+                }}),
+            timeout(TimeoutLength))
         }
     // Server-Sent Event Listeners/Observers
     watchStatus(url: string): Observable<eventResponse> {
