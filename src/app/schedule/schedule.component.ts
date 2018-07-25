@@ -100,7 +100,6 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                     sat: days.sat.toString() == "1" ? true : false,
                 }
             }
-            console.log(this.schedule)
         }) 
 }
 
@@ -111,7 +110,6 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
             case 't1':
             case 't2':
             case 't3':
-                console.log()
                 if (commandValue != '0' && commandValue != '1') {
                     let hours = parseInt(moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('HH'));
                     let minutes = moment(this.schedule.times[Number(commandName.slice(1)) - 1][commandName].time).format('mm');
@@ -141,7 +139,6 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                 }
         }
         functionArg = `${commandName},${commandValue}`;
-        console.log(functionArg)
         this.photon.callFunction("setSchedule", functionArg, notifyTitle)
             .subscribe(() => this.getSchedule()) // Make sure we're working with correct data by getting variables again
     }

@@ -90,14 +90,13 @@ export class SettingsComponent implements OnInit, AfterViewInit {
                 functionArg = `${commandName},${hours}${minutes}`;
                 break;
             case 'on':
-                commandValue = this.intervals.on ? '0' : '1' // Toggle the intervals
-                notifyTitle = this.intervals.on ? notifyTitle + 'Off' : notifyTitle + 'On'
+                commandValue = this.intervals.on ? '0' : '1'; // Toggle the intervals
+                notifyTitle = this.intervals.on ? (notifyTitle + 'Off') : (notifyTitle + 'On');
+                functionArg = `${commandName},${commandValue}`;
                 break;
             case 'immediate':
-                commandValue = this.intervals.immediate ? '0' : '1' // Toggle immediate dispensing
-                notifyTitle = this.intervals.immediate ? notifyTitle + 'Off' : notifyTitle + 'On'
-            default:
-                functionArg = `${commandName},${commandValue}`;
+                commandValue = this.intervals.immediate ? '0' : '1'; // Toggle immediate dispensing
+                notifyTitle = this.intervals.immediate ? notifyTitle + 'Off' : notifyTitle + 'On';
                 break;
         }
         // Make sure Start occurs before End
