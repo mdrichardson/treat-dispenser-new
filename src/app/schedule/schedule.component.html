@@ -1,9 +1,13 @@
-<div class="grid-container">
-    <label><input type="checkbox" [checked]="schedule.on" (change)="schedule.on = !schedule.on" (click)="setSchedule('on', 'schedule', 'Turning Schedule ')"></label>
+<div id="schedule-container">
+    <div class="toggle-container">
+        <label class="switch"><input type="checkbox" [checked]="schedule.on" (change)="schedule.on = !schedule.on" (click)="setSchedule('on', 'schedule', 'Turning Schedule ')"><span class="slider"></span></label>
+    </div>
     <div>
         <h2>Scheduled Meal Dispensing</h2>
+        <br />
         <h3>Dispense Meals On:</h3>
-        <div id="days">
+        <br />
+        <div id="days-container">
             <div>
                 <div><input type="checkbox" [checked]="schedule.days.sun" (change)="schedule.days.sun = !schedule.days.sun" (click)="setSchedule('on', 'sun', 'Turning Sunday ')"><label for="schedSun">Sunday</label></div>
                 <div><input type="checkbox" [checked]="schedule.days.mon" (change)="schedule.days.mon = !schedule.days.mon" (click)="setSchedule('on', 'mon', 'Turning Monday ')"><label for="schedMon">Monday</label></div>
@@ -17,25 +21,32 @@
             </div>
         </div>
         <h3>Dispense At:</h3>
-        <div>
+        <div id="times-container">
             <div *ngFor="let timeObj of schedule.times; let i = index"> <!--We have to use ['t'+(i+1)] to convert from index to t* in the interface-->
-                    <h4>Time {{ i + 1 }}</h4>
-                    <label><input type="checkbox" [checked]="timeObj['t'+(i+1)].on" (change)="timeObj['t'+(i+1)].on = !timeObj['t'+(i+1)].on" (click)="setSchedule('on', 't'+(i+1), 'Turning Time ')"></label>
-                    <div>
-                        <label>
-                            Dispense at:
-                            <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime" [(ngModel)]="timeObj['t'+(i+1)].time" (dateTimeChange)="setSchedule('t'+(i+1), '', 'Schedule Time '+(i+1)+': ')">
-                            <owl-date-time  #scheduleTime [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="timeObj['t'+(i+1)].time"></owl-date-time>
-                        </label>
+                <div class="time">
+                    <div class="time-toggle">
+                            <label class="switch small"><input type="checkbox" [checked]="timeObj['t'+(i+1)].on" (change)="timeObj['t'+(i+1)].on = !timeObj['t'+(i+1)].on" (click)="setSchedule('on', 't'+(i+1), 'Turning Time ')"><span class="slider small"></span></label>
                     </div>
-                    <div>
-                        <h5>Size:</h5>
-                        <div class="proportions grid-container">
-                            <div (click)="setSchedule('t'+(i+1)+'size', '0', 'Time '+(i+1)+' Size: Treat')" [ngClass]="{'active': timeObj['t'+(i+1)].size == '0'}">Treat</div>
-                            <div (click)="setSchedule('t'+(i+1)+'size', '1', 'Time '+(i+1)+' Size: Meal')" [ngClass]="{'active': timeObj['t'+(i+1)].size == '1'}">Meal</div>
+                    <div class="time-content">
+                        <h4>Time {{ i + 1 }}</h4>
+                        <br />
+                        <div>
+                            <label>
+                                Dispense at:
+                                <input [owlDateTimeTrigger]="scheduleTime" [owlDateTime]="scheduleTime" [(ngModel)]="timeObj['t'+(i+1)].time" (dateTimeChange)="setSchedule('t'+(i+1), '', 'Schedule Time '+(i+1)+': ')">
+                                <owl-date-time  #scheduleTime [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="timeObj['t'+(i+1)].time"></owl-date-time>
+                            </label>
+                        </div>
+                        <div>
+                            <strong>Size:   </strong>
+                            <div class="proportions time-proportions">
+                                <div (click)="setSchedule('t'+(i+1)+'size', '0', 'Time '+(i+1)+' Size: Treat')" [ngClass]="{'active': timeObj['t'+(i+1)].size == '0'}">Treat</div>
+                                <div (click)="setSchedule('t'+(i+1)+'size', '1', 'Time '+(i+1)+' Size: Meal')" [ngClass]="{'active': timeObj['t'+(i+1)].size == '1'}">Meal</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
