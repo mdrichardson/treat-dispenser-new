@@ -43,3 +43,24 @@ body {
         display: none;
     }
 }
+
+// Custom Notifier Colors
+
+.notifier__notification--default {
+    background-color: $gray !important;
+    color: $dark !important;
+}
+.notifier__notification--error .notifier__notification--warning {
+    background-color: $warn !important;
+    color: $dark !important;
+  }
+
+.notifier__notification--info {
+    background-color: $secondary !important;
+    color: $dark !important;
+}
+
+.notifier__notification--success {
+    background-color: $success !important;
+    color: $dark !important;
+  }
