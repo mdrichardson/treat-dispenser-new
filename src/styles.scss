@@ -8,10 +8,10 @@ $main-page-padding: 5%;
 // Colors
 $primary: #0A335F;
 $secondary: #3C91E6;
-$success: #B6D094;
+$success:#94D145;
 $warn: #FE4A49;
 $dark: #04080F;
-$gray: #DAD7CD;
+$gray: #E6ECEF;
 $light: #FBFBFA;
 
 
@@ -50,7 +50,7 @@ body {
     background-color: $gray !important;
     color: $dark !important;
 }
-.notifier__notification--error .notifier__notification--warning {
+.notifier__notification--error, .notifier__notification--warning {
     background-color: $warn !important;
     color: $dark !important;
   }

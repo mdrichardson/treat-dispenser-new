@@ -4,7 +4,7 @@
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: $main-page-padding 225px 1fr $main-page-padding;
-    background: #2D2E2E;
+    background: $primary;
     width: 100vw;
     height: $menu-height;
 
@@ -25,18 +25,18 @@
     
             li a {
                 display: block;
-                color: white;
+                color: $light;
                 text-decoration: none;
             }
     
             li a:visited {
-                color: white;
+                color: $light;
             }
         }
     }
 
     #title {
-        color: white;
+        color: $light;
         grid-column-start: 3;
         justify-self: right;
         align-self: center;

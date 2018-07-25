@@ -1,14 +1,14 @@
 @import '../../styles';
 
 * {
-    color:black; 
+    color: $dark; 
     font-size:0.9em;
 }
 
 #status-container {
     display: grid;
     grid-template-columns: $main-page-padding repeat(2, 1fr) $main-page-padding;
-    background-color: lightgray;
+    background-color: $gray;
     height: 100%;
     align-items: center;
 }
