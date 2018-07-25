@@ -26,7 +26,8 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     public mealSize: string;
 
     public intervals = <intervalsInterface>{};
-    private intervalsWarning: boolean;
+    private intervalsWarning: boolean = false;
+    private intervalsTimeWarning: boolean = false;
 
     constructor(private photon: PhotonService) { }
 
@@ -99,6 +100,10 @@ export class SettingsComponent implements OnInit, AfterViewInit {
                 notifyTitle = this.intervals.immediate ? notifyTitle + 'Off' : notifyTitle + 'On';
                 functionArg = `${commandName},${commandValue}`;
                 break;
+            case 'hours':
+            case 'minutes':
+                functionArg = `${commandName},${commandValue}`;
+                break;
         }
         // Make sure Start occurs before End
         let dateCompare = moment(new Date(2018, 0, 1, hours, minutes));
@@ -106,8 +111,14 @@ export class SettingsComponent implements OnInit, AfterViewInit {
             this.intervalsWarning = true;
         } else {
             this.intervalsWarning = false;
-            this.photon.callFunction("setInterval", functionArg, notifyTitle)
+            // Make sure Hours and Minutes aren't both 0 or the photon will dispense continuously
+            if (this.intervals.hours == '0' && this.intervals.minutes == '0') {
+                this.intervalsTimeWarning = true;
+            } else {
+                this.intervalsTimeWarning = false;
+                this.photon.callFunction("setInterval", functionArg, notifyTitle)
                 .subscribe(() => this.getIntervals()) // Make sure we're working with correct data by getting variables again
+            }
         }
     }
 

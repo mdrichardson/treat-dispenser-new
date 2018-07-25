@@ -54,14 +54,14 @@
                                 <owl-date-time #intervalEndInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.end"></owl-date-time>
                         </label>
                     </div>
-                    <p *ngIf="intervalsWarning" id="interval-warn">Error: Start must occur before End</p>
+                    <p *ngIf="intervalsWarning" class="interval-warn">Error: Start must occur before End</p>
                 </div>
                 <h3>Dispense Treat Every:</h3>
                 <br />
                 <div id="dispense-container">
                     <div id="hours">
-                        <label>Hours</label>
-                        <select [(ngModel)]="intervals.hours">
+                        <label>Hours</label> 
+                        <select [(ngModel)]="intervals.hours" (change)="setIntervals('hours', intervals.hours, 'Hours')">
                             <option>0</option>
                             <option>1</option>
                             <option>2</option>
@@ -79,7 +79,7 @@
                     </div>
                     <div id="minutes">
                         <label>Minutes</label>
-                        <select [(ngModel)]="intervals.minutes">
+                        <select [(ngModel)]="intervals.minutes" (change)="setIntervals('minutes', intervals.minutes, 'Minutes')">
                             <option>0</option>
                             <option>5</option>
                             <option>15</option>
@@ -88,6 +88,7 @@
                         </select>
                     </div>
                 </div>
+                <div class="interval-warn" *ngIf="intervalsTimeWarning">Hours and Minutes can't both be 0!</div>
                 <div id="immediate-toggle">
                     <label class="switch small"><input type="checkbox" [checked]="intervals.immediate" (change)="intervals.immediate = !intervals.immediate" (click)="setIntervals('immediate', '', 'Immediate ')"><span class="slider small"></span></label>
                     <p>Dispense immediately upon settings change<span *ngIf="intervals.SEon"><br />(if within time window)</span></p>
