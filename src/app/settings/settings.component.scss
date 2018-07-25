@@ -1,3 +1,82 @@
+@import '../../styles';
+
+#settings-container {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+
+    #proportions {
+        display:grid;
+        align-content: center;
+        justify-content: center;
+        grid-template-rows: auto auto;
+        text-align: center;
+
+        #proportions-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-gap: 20px;
+            margin: 10px 0px;
+        }
+    }
+
+    #intervals-container {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 100px 1fr;
+
+        #radio-container {
+            display: grid;
+            grid-template-columns: 200px auto;
+            grid-gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        #SE-times {
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            margin: 10px 0px;
+
+            #start-time, #end-time {
+                display: grid;
+                grid-template-columns: 75px 100px auto;
+                grid-gap: 10px;
+                margin-bottom: 10px;
+
+                input {
+                    width: 75px;
+                    text-align: center;
+                }
+            }
+        }
+
+        #interval-warn {
+            color: $warn;
+        }
+    }
+
+    #dispense-container {
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-gap: 10px;
+
+        #hours, #minutes {
+            display: grid;
+            grid-template-columns: 50px 50px;
+            grid-gap: 20px;
+        }
+    }
+
+    #immediate-toggle {
+        display: grid;
+        grid-template-columns: 30px auto;
+        grid-gap: 20px;
+        margin: 20px 0px;
+    }
+
+
+}
+
 .proportions {
     display: inline-grid;
     grid-template-columns: repeat(3, 30px);
@@ -12,7 +91,80 @@
     }
 
     .active {
-        background-color: lightblue;
+        background-color: $primary;
+        color: $light;
     }
 }
 
+
+// Toggles
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch.small {
+    width: 30px;
+    height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $gray;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: $light;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.slider.small:before {
+    height: 13px;
+    width: 13px;
+    bottom: 2px;
+    left: 2px;
+}
+
+input:checked + .slider {
+    background-color: $primary;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px $primary;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+input:checked + .slider.small:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
