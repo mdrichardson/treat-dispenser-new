@@ -1,11 +1,5 @@
-<div class="">
-    <div class="" style="overflow:hidden">
-        <video muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
-    </div>
-    <br>
-    <br>
+<video muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
+<div id="button-container">
+    <button type="button" class="auger" (click)="meal()">Give Meal</button>
+    <button type="button" class="auger" (click)="treat()">Give Treat</button>
 </div>
-<ul class=""> 
-    <li><button type="button" class="auger" (click)="meal()">Give Meal</button></li>
-    <li><button type="button" class="auger" (click)="treat()">Give Treat</button></li>
-</ul>
