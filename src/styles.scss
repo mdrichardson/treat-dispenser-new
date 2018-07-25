@@ -5,6 +5,15 @@ $mobile: 768px;
 $menu-height: 50px;
 $status-bar-height: 25px;
 $main-page-padding: 5%;
+// Colors
+$primary: #0A335F;
+$secondary: #3C91E6;
+$success: #B6D094;
+$warn: #FE4A49;
+$dark: #04080F;
+$gray: #DAD7CD;
+$light: #FBFBFA;
+
 
 * {
     margin: 0;
@@ -13,7 +22,7 @@ $main-page-padding: 5%;
 
 body {
     margin: 0;
-    background: #F2F2F2;
+    background: $light;
     height: 100vh;
 }
 
