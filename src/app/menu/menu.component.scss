@@ -1,27 +1,47 @@
 @import '../../styles';
 
-nav {
-    background: #2D2E2E;
+#menu-container {
+    display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: $main-page-padding 30% 1fr auto $main-page-padding;
+    grid-template-columns: $main-page-padding 225px 1fr $main-page-padding;
+    background: #2D2E2E;
     width: 100vw;
+    height: $menu-height;
 
-    #menu-items {
+    nav {
         grid-column-start: 2;
-        display: flex;
-        justify-content: space-between;
+        list-style-type: none;
+        width: 100%;
+        margin: auto;
 
-        a {
-            @extend .center;
-            color: white;
-            text-decoration: none;
+        ul {
+            display: flex;
+            justify-content: space-between;
+            align-content: center;
+    
+            li {
+                display: inline-block;
+            }
+    
+            li a {
+                display: block;
+                color: white;
+                text-decoration: none;
+            }
+    
+            li a:visited {
+                color: white;
+            }
         }
     }
 
-    #info {
+    #title {
         color: white;
-        font-size: 0.8rem;
-        grid-column-start: 4;
+        grid-column-start: 3;
+        justify-self: right;
+        align-self: center;
+        font-size: 1.5em;
+        font-weight: bold;
     }
     
 }

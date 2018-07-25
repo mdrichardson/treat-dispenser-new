@@ -2,9 +2,14 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
 $mobile: 768px;
-$menu-height: 40px;
-$status-bar-height: 25px;
+$menu-height: 50px;
+$status-bar-height: 20px;
 $main-page-padding: 5%;
+
+* {
+    margin: 0;
+    padding: 0;
+}
 
 body {
     margin: 0;
@@ -12,17 +17,13 @@ body {
     height: 100vh;
 }
 
-.grid-container {
-    display: grid;
-}
-
 .center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
 
-@media only screen and (max-width: $mobile) {
+@media only screen and (max-width: #{$mobile - 1px}) { // Don't disappear at $mobile
     .hide-mobile {
         display: none;
     }

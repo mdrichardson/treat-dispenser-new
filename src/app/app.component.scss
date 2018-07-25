@@ -7,17 +7,16 @@
 }
 
 app-menu {
-    grid-column-start: 2;
+    grid-row-start: 1;
+    margin: 0;
+    height: $menu-height;
 }
 
 app-status-bar {
-    grid-column-start: 2;
-    height: $status-bar-height;
+    grid-row-start: 2;
 }
 
 #content {
-    grid-column-start: 2;
-    @extend .center;
-    display: grid;
-    grid-template-columns: $main-page-padding 1fr $main-page-padding;
+    grid-row-start: 3;
+    padding: 50px 10%;
 }
