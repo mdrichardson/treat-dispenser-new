@@ -13,7 +13,9 @@ $warn: #FE4A49;
 $dark: #04080F;
 $gray: #E6ECEF;
 $light: #FBFBFA;
+$shadow: 0 1px 4px rgba(0, 0, 0, .6);
 
+// Global layout
 
 * {
     margin: 0;
@@ -44,23 +46,101 @@ body {
     }
 }
 
+// Colors
+
+.primary {
+    background-color: $primary;
+    color: $light;
+}
+
+.secondary {
+    background-color: $secondary;
+    color: $dark;
+}
+.success {
+    background-color: $success;
+    color: $dark;
+}
+.warn {
+    background-color: $warn;
+    color: $dark;
+}
+.dark {
+    background-color: $dark;
+    color: $light;
+}
+.gray {
+    background-color: $gray;
+    color: $dark;
+}
+.light {
+    background-color: $light;
+    color: $dark;
+}
+
+// Button styling
+
+button {  
+    overflow: hidden;
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: $shadow;
+    transition: background-color .3s;
+}
+
+button.primary:hover, button.primary:focus {
+    background-color: rgba(10, 51, 95, 0.8);
+}
+button.secondary:hover, button.secondary:focus {
+    background-color: rgba(60, 145, 230, 0.8);
+}
+button.success:hover, button.success:focus {
+    background-color: rgba(148, 209, 69, 0.8);
+}
+button.warn:hover, button.warn:focus {
+    background-color: rgba(254, 74, 73, 0.8);
+}
+button.dark:hover, button.dark:focus {
+    background-color: rgba(2, 3, 6, 0.2);
+}
+button.gray:hover, button.gray:focus {
+    background-color: rgba(90, 93, 94, 0.8);
+}
+button.light:hover, button.light:focus {
+    background-color: rgba(230, 236, 239, 0.8);
+}
+
+
 // Custom Notifier Colors
 
 .notifier__notification--default {
-    background-color: $gray !important;
-    color: $dark !important;
+    @extend .gray;
+    button {
+        box-shadow: none;
+    }
 }
 .notifier__notification--error, .notifier__notification--warning {
-    background-color: $warn !important;
-    color: $dark !important;
+    @extend .warn;
+    button {
+        box-shadow: none;
+    }
   }
 
 .notifier__notification--info {
-    background-color: $secondary !important;
-    color: $dark !important;
+    @extend .secondary;
+    button {
+        box-shadow: none;
+    }
 }
 
 .notifier__notification--success {
-    background-color: $success !important;
-    color: $dark !important;
-  }
+    @extend .success;
+    button {
+        box-shadow: none;
+    }
+}
+
+.notifier__notification-button-icon {
+    fill: $dark !important;
+}
