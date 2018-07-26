@@ -43,6 +43,8 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
 
     public schedule = <scheduleInterface>{ times:[], days:{}};
 
+    public scheduleWarning:boolean = false;
+
     @ViewChildren('size') timeSizes: QueryList<any>;
 
     constructor(private photon: PhotonService) { }
@@ -138,9 +140,18 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                         break;
                 }
         }
-        functionArg = `${commandName},${commandValue}`;
-        this.photon.callFunction("setSchedule", functionArg, notifyTitle)
-            .subscribe(() => this.getSchedule()) // Make sure we're working with correct data by getting variables again
+        // Make sure time 1, time 2, and/or time 3 aren't equal to each other
+        let time1 = moment(this.schedule.times[0].t1.time).format('HHmm');
+        let time2 = moment(this.schedule.times[1].t2.time).format('HHmm');
+        let time3 = moment(this.schedule.times[2].t3.time).format('HHmm');
+        if (time1 == time2 || time1 == time3 || time2 == time3) {
+                this.scheduleWarning = true;
+            } else {
+                functionArg = `${commandName},${commandValue}`;
+                this.scheduleWarning = false;
+                this.photon.callFunction("setSchedule", functionArg, notifyTitle)
+                    .subscribe(() => this.getSchedule()) // Make sure we're working with correct data by getting variables again
+            }
     }
 
     ngOnInit() {
