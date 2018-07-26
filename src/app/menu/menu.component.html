@@ -1,13 +1,13 @@
 <div id="menu-container">
     <ul>
-        <li>
-            <a routerLink="" [class.activated]="currentUrl == '/'"><i class="material-icons only-mobile">home</i><span class="hide-mobile">Home</span></a>
+        <li [class.activated]="currentUrl == '/'">
+            <div><a routerLink=""><i class="material-icons only-mobile">home</i><span class="hide-mobile">Home</span></a></div>
         </li>
-        <li>
-            <a routerLink="settings" [class.activated]="currentUrl == '/settings'"><i class="material-icons only-mobile">settings</i><span class="hide-mobile">Settings</span></a>
+        <li [class.activated]="currentUrl == '/settings'">
+            <div><a routerLink="settings"><i class="material-icons only-mobile">settings</i><span class="hide-mobile">Settings</span></a></div>
         </li>
-        <li>
-            <a routerLink="debug" [class.activated]="currentUrl == '/debug'"><i class="material-icons only-mobile">bug_report</i><span class="hide-mobile">Debug</span></a>
+        <li [class.activated]="currentUrl == '/debug'">
+            <div><a routerLink="debug"><i class="material-icons only-mobile">bug_report</i><span class="hide-mobile">Debug</span></a></div>
         </li>
     </ul>
     <p id="title" class="hide-mobile">Treat Dispenser</p>

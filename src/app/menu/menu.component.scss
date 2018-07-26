@@ -1,32 +1,29 @@
-@import '../../styles';
+    @import '../../styles';
 
 #menu-container {
     display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: $main-page-padding 600px 1fr $main-page-padding;
-    background: $primary;
-    width: 100vw;
+    display: grid;
+    grid-template-columns: $main-page-padding 300px 1fr $main-page-padding;
     height: $menu-height;
 
     ul {
         grid-column-start: 2;
-        list-style-type: none;
-        overflow: hidden;
-        text-align: center;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
 
         li {
-            display: inline;
-            margin: auto;
-            padding: auto;
+            flex: 1 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
             a {
-                display: inline-block;
-                color: $light;
-                text-decoration: none;
+                flex: 1;
                 vertical-align: middle;
-                text-align: center;
-                margin: auto;
-                padding: auto;
+                text-decoration: none;
 
                 &:visited {
                     color: $light;
@@ -47,5 +44,6 @@
 }
 
 .activated {
-    background: $gray;
+    background: $secondary;
+    border-bottom: 4px solid $gray;
 }
