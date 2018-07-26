@@ -3,34 +3,34 @@
 #menu-container {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: $main-page-padding 225px 1fr $main-page-padding;
+    grid-template-columns: $main-page-padding 600px 1fr $main-page-padding;
     background: $primary;
     width: 100vw;
     height: $menu-height;
 
-    nav {
+    ul {
         grid-column-start: 2;
         list-style-type: none;
-        width: 100%;
-        margin: auto;
+        overflow: hidden;
+        text-align: center;
 
-        ul {
-            display: flex;
-            justify-content: space-between;
-            align-content: center;
-    
-            li {
+        li {
+            display: inline;
+            margin: auto;
+            padding: auto;
+
+            a {
                 display: inline-block;
-            }
-    
-            li a {
-                display: block;
                 color: $light;
                 text-decoration: none;
-            }
-    
-            li a:visited {
-                color: $light;
+                vertical-align: middle;
+                text-align: center;
+                margin: auto;
+                padding: auto;
+
+                &:visited {
+                    color: $light;
+                }
             }
         }
     }
@@ -44,4 +44,8 @@
         font-weight: bold;
     }
     
+}
+
+.activated {
+    background: $gray;
 }
