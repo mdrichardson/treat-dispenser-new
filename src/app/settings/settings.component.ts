@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PhotonService } from '../photon.service';
 import * as moment from 'moment';
+import { staggerItems } from '../animations/stagger';
 
 declare type PropType = 'none' | 'treat' | 'meal';
 
@@ -17,7 +18,8 @@ interface intervalsInterface {
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
+  animations: [staggerItems]
 })
 
 export class SettingsComponent implements OnInit, AfterViewInit {

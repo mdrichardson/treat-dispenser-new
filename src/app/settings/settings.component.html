@@ -1,6 +1,6 @@
 
-<div id="settings-container">
-    <div id="proportions">
+<div id="settings-container" @staggerItems>
+    <div id="proportions" class="stagger-from-top">
         <div>
             <h2>Proportions</h2>
         </div>
@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div id="intervals-container">
+    <div id="intervals-container" class="stagger-from-bottom">
         <div class="toggle-container">
             <label class="switch"><input type="checkbox" [checked]="intervals.on" (change)="intervals.on = !intervals.on" (click)="setIntervals('on', 'intervals', 'Interval ')"><span class="slider"></span></label>
         </div>
@@ -96,7 +96,7 @@
             </div>
         </div>
     </div>
-    <app-schedule></app-schedule>
+    <app-schedule class="stagger-from-bottom"></app-schedule>
 </div>
 
 

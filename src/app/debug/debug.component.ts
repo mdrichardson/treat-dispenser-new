@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotonService } from '../photon.service';
+import { staggerItems } from '../animations/stagger';
 
 @Component({
   selector: 'app-debug',
   templateUrl: './debug.component.html',
-  styleUrls: ['./debug.component.scss']
+  styleUrls: ['./debug.component.scss'],
+  animations: [staggerItems]
 })
 export class DebugComponent implements OnInit {
 

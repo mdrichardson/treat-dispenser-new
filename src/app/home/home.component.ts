@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService, userInterface } from '../database.service';
 import { PhotonService } from '../photon.service';
+import { staggerItems } from '../animations/stagger';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [staggerItems]
 })
 
 export class HomeComponent implements OnInit {
