@@ -13,13 +13,21 @@ export class HomeComponent implements OnInit {
     user: userInterface;
     video: string;
 
+    public augerDisabled:boolean = false;
+
     constructor(private db: DatabaseService, private photon: PhotonService) {
         this.user = db.getUser<userInterface>();
         this.video = this.user.videoUrl + this.user.videoAuthToken;
     }
 
-    treat = () =>this.photon.callFunction('auger', 'treat', 'Treat').subscribe();
-    meal = () => this.photon.callFunction('auger', 'meal', 'Meal').subscribe();
+    treat = () => {
+        this.augerDisabled = true;
+        this.photon.callFunction('auger', 'treat', 'Treat').subscribe(() => this.augerDisabled = false)
+    };
+    meal = () => {
+        this.augerDisabled = true;
+        this.photon.callFunction('auger', 'meal', 'Meal').subscribe(() => this.augerDisabled = false);
+    }
 
     ngOnInit() {
 

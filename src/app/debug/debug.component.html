@@ -1,9 +1,9 @@
 <div id="debug-container">
-    <button class="primary" (click)="load()"><i class="material-icons">drag_indicator</i>  Load Dispenser</button>
+    <button class="primary" (click)="load()" [disabled]="augerDisabled"><i class="material-icons">drag_indicator</i>  Load Dispenser</button>
     <div id="button-group">
-        <button class="secondary" (click)="out()">Push  <i class="material-icons">keyboard_arrow_right</i></button>
-        <button class="secondary" (click)="inout()"><i class="material-icons">keyboard_arrow_right</i>  Pull/Push  <i class="material-icons">keyboard_arrow_left</i></button>
-        <button class="secondary" (click)="in()"><i class="material-icons">keyboard_arrow_right</i>  Pull</button>
+        <button class="secondary" (click)="out()" [disabled]="augerDisabled">Push  <i class="material-icons">keyboard_arrow_right</i></button>
+        <button class="secondary" (click)="inout()" [disabled]="augerDisabled"><i class="material-icons">keyboard_arrow_right</i>  Pull/Push  <i class="material-icons">keyboard_arrow_left</i></button>
+        <button class="secondary" (click)="in()" [disabled]="augerDisabled"><i class="material-icons">keyboard_arrow_right</i>  Pull</button>
     </div>
     <button class="warn" (click)="stop()"><i class="material-icons">stop</i>  Stop</button>
     <button class="gray" (click)="test()"><i class="material-icons">build</i>  Test</button>

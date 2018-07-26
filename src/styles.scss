@@ -94,28 +94,37 @@ button {
     font-size: 24px;
 }
 
-button.primary:hover, button.primary:focus {
-    background-color: rgba(10, 51, 95, 0.9);
-}
-button.secondary:hover, button.secondary:focus {
-    background-color: rgba(99, 125, 153, 0.9);
-}
-button.success:hover, button.success:focus {
-    background-color: rgba(177, 221, 119, 0.8);
-}
-button.warn:hover, button.warn:focus {
-    background-color: rgba(254, 74, 73, 0.9);
-}
-button.dark:hover, button.dark:focus {
-    background-color: rgba(2, 3, 6, 0.9);
-}
-button.gray:hover, button.gray:focus {
-    background-color: rgba(230, 236, 239, 0.8);
-}
-button.light:hover, button.light:focus {
+button:disabled {
     background-color: rgba(251, 251, 250, 0.8);
+    color: $gray;
 }
 
+button.light:disabled {
+    background-color: white;
+    color: $light;
+}
+
+button.primary:hover:enabled, button.primary:focus:enabled {
+    background-color: rgba(10, 51, 95, 0.9);;
+}
+button.secondary:hover:enabled, button.secondary:focus:enabled {
+    background-color: rgba(99, 125, 153, 0.8);
+}
+button.success:hover:enabled, button.success:focus:enabled {
+    background-color: rgba(177, 221, 119, 0.8);
+}
+button.warn:hover:enabled, button.warn:focus:enabled {
+    background-color: rgba(254, 74, 73, 0.9);
+}
+button.dark:hover:enabled, button.dark:focus:enabled {
+    background-color: rgba(2, 3, 6, 0.9);
+}
+button.gray:hover:enabled, button.gray:focus:enabled {
+    background-color: rgba(230, 236, 239, 0.8);
+}
+button.light:hover:enabled, button.light:focus:enabled {
+    background-color: rgba(251, 251, 250, 0.8);
+}
 
 // Custom Notifier Colors
 
@@ -206,7 +215,7 @@ input:checked + .slider {
     background-color: $primary;
 }
 
-input:focus + .slider {
+input:focus:enabled + .slider {
     box-shadow: 0 0 1px $primary;
 }
 
