@@ -106,7 +106,7 @@ button.light:disabled {
     color: $light;
 }
 
-button:hover:enabled, button:focus:enabled {
+button:hover:enabled {
     filter: brightness(1.3);
 }
 
