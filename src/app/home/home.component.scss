@@ -1,7 +1,7 @@
 @import '../../styles';
 
 video {
-    max-height: 70vh;
+    max-height: 65vh;
     box-shadow: shadow;
 }
 
@@ -12,7 +12,7 @@ video {
         flex-wrap: wrap;
         flex-direction: row;
         align-self: stretch;
-        height: 20vh;
+        height: 25vh;
 
         button {
             width: 100%;
