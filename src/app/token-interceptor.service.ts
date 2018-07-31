@@ -9,7 +9,6 @@ export class TokenInterceptorService implements HttpInterceptor {
 
     constructor(private db: DatabaseService) { }
 
-
     // Intercept all outgoing HTTP requests so we can add our JWT
     intercept(req, next) {
         // Ignore outgoing requests to particle
@@ -24,5 +23,4 @@ export class TokenInterceptorService implements HttpInterceptor {
             return next.handle(req)
         }
     }
-
 }

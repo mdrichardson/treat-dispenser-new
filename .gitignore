@@ -39,5 +39,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Temporaryily ignore stored auth credentials
+# Ignore stored auth credentials
 /src/app/database.service.ts
+jwtRS256.key
+jwtRS256.key.pub
