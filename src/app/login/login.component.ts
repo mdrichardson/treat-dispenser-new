@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
         this.db.login(this.user)
         .subscribe(
             res => {
-                console.log(res);
                 localStorage.setItem('token', res.token);
                 this.router.navigate(['/']);
             },

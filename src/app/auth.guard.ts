@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
             this.router.events.subscribe((_: NavigationStart) => this.currentUrl.next(_.url));
             return true
         } else {
+            localStorage.removeItem('token')
             this.router.navigate(['/login']);
             this.currentUrl.next('/login');
             return false

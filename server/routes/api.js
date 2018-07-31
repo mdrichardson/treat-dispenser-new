@@ -65,7 +65,7 @@ router.post('/login', (req, res) => {
                 res.status(401).send('Invalid Password');
             } else {
                 let payload = { subject: user._id };
-                let token = jwt.sign(payload, private_cert);
+                let token = jwt.sign(payload, private_cert, { expiresIn: '30d' });
                 res.status(200).send({token});
             }
         } 

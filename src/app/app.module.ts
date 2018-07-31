@@ -17,6 +17,7 @@ import { ScheduleTimesComponent } from './schedule/schedule.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { JwtModule } from '@auth0/angular-jwt'
 
 export const MY_MOMENT_FORMATS = {
     parseInput: 'l LT',
@@ -45,6 +46,15 @@ export const MY_MOMENT_FORMATS = {
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+        config: {
+          tokenGetter: () => {
+            return localStorage.getItem('token');
+          },
+          whitelistedDomains: ['localhost:3000'],
+          blacklistedRoutes: ['localhost:8100', 'api.particle.io']
+        }
+      }),
     NotifierModule.withConfig({
         position: {
             horizontal: {
