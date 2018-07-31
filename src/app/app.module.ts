@@ -14,6 +14,7 @@ import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from "@angular/forms";
 import { ScheduleTimesComponent } from './schedule/schedule.component';
+import { LoginComponent } from './login/login.component';
 
 export const MY_MOMENT_FORMATS = {
     parseInput: 'l LT',
@@ -33,7 +34,8 @@ export const MY_MOMENT_FORMATS = {
     HomeComponent,
     DebugComponent,
     StatusBarComponent,
-    ScheduleTimesComponent
+    ScheduleTimesComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,

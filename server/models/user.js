@@ -16,6 +16,26 @@ const userSchema = new Schema({
     photonAccessToken: String,
     videoUrl: String,
     videoAuthToken: String,
+    
+    }, {
+        toObject: {
+        virtuals: true
+        },
+        toJSON: {
+        virtuals: true 
+        }
 })
+
+userSchema
+    .virtual('photonApiUrl')
+    .get(function () {
+        return `https://api.particle.io/v1/devices/${this.photonDeviceId}/`
+    })
+
+userSchema
+    .virtual('photonAccessString')
+    .get(function () {
+        return `?access_token=${this.photonAccessToken}`
+    })
 
 module.exports = mongoose.model('user', userSchema, 'users');
