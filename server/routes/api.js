@@ -4,7 +4,9 @@ const router = express.Router();
 const User = require('../models/user')
 const mongoose = require('mongoose');
 const db = 'mongodb://localhost:27017/treat-dispenser';
-const cert = fs.readFileSync('./jwtRS256.key');
+const fs = require('fs');
+const private_cert = fs.readFileSync('./jwtRS256.key');
+const public_cert = fs.readFileSync('./jwtRS256.key.pub');
 
 mongoose.connect(db, err => {
     if (err) {
@@ -22,9 +24,9 @@ verifyToken = (req, res, next) => {
     }
     let token = req.headers.authorization.split(' ')[1];
     if (token === 'null') {
-        return res.status(401).send('Unauthorized Reqest')
+        return res.status(401).send('Unauthorized Request')
     }
-    let payload = jwt.verify(token, cert);
+    let payload = jwt.verify(token, public_cert);
     if (!payload) {
         return res.status(401).send('Unauthorized Request')
     }
@@ -44,7 +46,7 @@ router.post('/register', (req, res) => {
             console.log(error);
         } else {
             let payload = { subject: registeredUser._id };
-            let token = jwt.sign(payload, cert);
+            let token = jwt.sign(payload, private_cert);
             res.status(200).send({token});
         }
     })
@@ -63,7 +65,7 @@ router.post('/login', (req, res) => {
                 res.status(401).send('Invalid Password');
             } else {
                 let payload = { subject: user._id };
-                let token = jwt.sign(payload, cert);
+                let token = jwt.sign(payload, private_cert);
                 res.status(200).send({token});
             }
         } 
