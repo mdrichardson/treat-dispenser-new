@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../database.service';
+import { Router } from '@angular/router';
 
 class User {
     constructor(
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
     
     user: User = new User();
 
-    constructor(private db: DatabaseService) { }
+    constructor(private db: DatabaseService, private router: Router) { }
 
     ngOnInit() {
     }
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
             res => {
                 console.log(res);
                 localStorage.setItem('token', res.token);
+                this.router.navigate(['/']);
             },
             err => console.log(err)
         )
