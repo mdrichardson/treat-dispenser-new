@@ -15,6 +15,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from "@angular/forms";
 import { ScheduleTimesComponent } from './schedule/schedule.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 export const MY_MOMENT_FORMATS = {
     parseInput: 'l LT',
@@ -66,7 +67,7 @@ export const MY_MOMENT_FORMATS = {
     OwlDateTimeModule, 
     OwlMomentDateTimeModule,
   ],
-  providers: [{provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS}],
+  providers: [{provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS}, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
