@@ -20,7 +20,7 @@ export interface userInterface {
 
 export class DatabaseService {
 
-    private loginUrl = 'http://localhost:3000/api/login';
+    private loginUrl = 'https://localhost:3000/api/login';
     public user: userInterface;
     private token: string;
     private userLoggedInSource = new BehaviorSubject(false);
