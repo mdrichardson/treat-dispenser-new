@@ -40,6 +40,5 @@ testem.log
 Thumbs.db
 
 # Ignore stored auth credentials
-/src/app/database.service.ts
 jwtRS256.key
 jwtRS256.key.pub
