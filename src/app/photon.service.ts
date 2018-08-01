@@ -49,11 +49,13 @@ export class PhotonService {
 
     public user: userInterface;
 
+    // For ensuring we don't try running things until user is logged in and we have API info
     public userLoggedIn:boolean = false;
     private userLoggedInSource;
 
   	constructor(private http: HttpClient, private notifierService: NotifierService, private db: DatabaseService) {
         this.notifier = notifierService;
+        // Once we're logged in, load the user info
         this.userLoggedInSource = this.db.userLoggedIn;
         this.userLoggedInSource
             .subscribe(value => {
@@ -125,7 +127,7 @@ export class PhotonService {
                 }}),
             timeout(TimeoutLength))
         }
-    // Server-Sent Event Listeners/Observers
+    // Server-Sent Event Listeners/Observers for status and activity in status bar
     watchStatus(url: string): Observable<eventResponse> {
         return new Observable<eventResponse>(obs => {
             const source = new EventSource(url);

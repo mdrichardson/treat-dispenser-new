@@ -9,7 +9,7 @@ const fs = require('fs');
 const private_cert = fs.readFileSync('./jwtRS256.key');
 const public_cert = fs.readFileSync('./jwtRS256.key.pub');
 
-// Quick allow/disallow of registration
+// Quick allow/disallow of registration. True for allow, false for disallow
 var allow_registration = false;
 
 mongoose.connect(db, err => {
@@ -20,27 +20,12 @@ mongoose.connect(db, err => {
     }
 })
 
-// This can be used to verify JWT. Not needed currently.
-verifyToken = (req, res, next) => {
-    if (!req.headers.authorization) {
-        return res.status(401).send('Unauthorized Request')
-    }
-    let token = req.headers.authorization.split(' ')[1];
-    if (token === 'null') {
-        return res.status(401).send('Unauthorized Request')
-    }
-    let payload = jwt.verify(token, public_cert);
-    if (!payload) {
-        return res.status(401).send('Unauthorized Request')
-    }
-    req.userId = payload.subject;
-    next()
-}
-
+// Verify API works at all
 router.get('/', (req, res) => {
     res.send('API route works!')
 })
 
+// Register users
 router.post('/register', (req, res) => {
     if (allow_registration) {
         bcrypt.hash(req.body.password, 10, function(err, hash){
@@ -78,6 +63,7 @@ router.post('/register', (req, res) => {
     }
 })
 
+// Allow users to login if they have a username/password already. Returns all user data as user object.
 router.post('/login', (req, res) => {
     let userData = req.body;
     User.findOne({username: userData.username}, (error, user) => {
@@ -137,21 +123,5 @@ router.use(function(req, res, next) {
       });
     }
   });
-
-router.get('/user:id', verifyToken, (req, res) => {
-    User.findById(req.user.id, (error, user) => {
-        if (error) {
-            console.log(error);
-        } else {
-            if (!user) {
-                res.status(401).send('Invalid User ID');
-            } else {
-                console.log(res);
-                res.status(200).send({res});
-                }
-            }
-        }
-    )
-})
 
 module.exports = router;

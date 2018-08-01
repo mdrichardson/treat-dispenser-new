@@ -24,11 +24,12 @@ interface intervalsInterface {
 
 export class SettingsComponent implements OnInit, AfterViewInit {
 
+    // For highlighting/activating sizes in DOM
     public treatSize: string;
     public mealSize: string;
 
     public intervals = <intervalsInterface>{};
-    private intervalsWarning: boolean = false;
+    private intervalsWarning: boolean = false; // For displaying warnings if interval or interval times are invalid
     private intervalsTimeWarning: boolean = false;
 
     constructor(private photon: PhotonService) { }
@@ -60,6 +61,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
             let intervalEnd_tmp = resp_intervals.end.toString().length == 3 
                                     ? `0${resp_intervals.end.toString()}` // For '0*00' hours
                                     : resp_intervals.end.toString();
+            // Set response to this.intervals
             this.intervals = {
                 on: resp_intervals.on.toString() == "1" ? true : false,
                 SEon: resp_intervals.SE.toString() == "1" ? true : false,
@@ -82,26 +84,31 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         var hours;
         var minutes;
         switch(commandName) {
+            // Deal with interval start time
             case 'start':
                 hours = parseInt(moment(this.intervals['start']).format('HH'));
                 minutes = moment(this.intervals.start).format('mm');
                 functionArg = `${commandName},${hours}${minutes}`;
                 break;
+            // Deal with interval end time
             case 'end':
                 hours = moment(this.intervals.end).format('HH');
                 minutes = moment(this.intervals.end).format('mm');
                 functionArg = `${commandName},${hours}${minutes}`;
                 break;
+            // Deal with interval on/off
             case 'on':
                 commandValue = this.intervals.on ? '0' : '1'; // Toggle the intervals
                 notifyTitle = this.intervals.on ? (notifyTitle + 'Off') : (notifyTitle + 'On');
                 functionArg = `${commandName},${commandValue}`;
                 break;
+            // Deal with immediate on/off
             case 'immediate':
                 commandValue = this.intervals.immediate ? '0' : '1'; // Toggle immediate dispensing
                 notifyTitle = this.intervals.immediate ? notifyTitle + 'Off' : notifyTitle + 'On';
                 functionArg = `${commandName},${commandValue}`;
                 break;
+            // Photon takes the hours and minutes commands without change
             case 'hours':
             case 'minutes':
                 functionArg = `${commandName},${commandValue}`;
@@ -128,6 +135,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        // Load current Photon values on component Init
         this.getProportions();
         this.getIntervals();
     }

@@ -14,6 +14,8 @@ export class DebugComponent implements OnInit {
 
     public augerDisabled:boolean = false;
    
+    // Functions that correlate to each Photon debug function.
+    // this.augerDisabled disables the buttons that run the auger. They are re-enabled by the Photon service
     load = () => {
         this.augerDisabled = true;
         this.photon.callFunction('auger', 'load', 'Load').subscribe(() => this.augerDisabled = false);

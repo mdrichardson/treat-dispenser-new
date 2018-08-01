@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+// Create server and load separate api.js file
 const app = express();
 const api = require('./routes/api');
 
@@ -27,10 +28,6 @@ app.use('/api', api);
 app.get('/', function(req, res){
     res.send('Test successful!')
 })
-
-// app.listen(PORT, function(){
-//     console.log('Server running on localhost:' + PORT)
-// })
 
 httpsServer.listen(3000, () => {
 	console.log('HTTPS Server running on port 443');

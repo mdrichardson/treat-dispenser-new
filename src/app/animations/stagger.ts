@@ -1,5 +1,7 @@
 import { trigger, query, animate, transition, style, stagger } from '@angular/animations';
 
+// Fade each item in from either top or bottom with a slight delay between items
+// Use @staggerItems on parent element and stagger-from-top/bottom with each item's class
 export const staggerItems =
     trigger('staggerItems', [
         transition('* => *', [

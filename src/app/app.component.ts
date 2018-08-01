@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService, userInterface } from './database.service';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +7,11 @@ import { DatabaseService, userInterface } from './database.service';
       './app.component.scss']
 })
 
+// Nothing needed here as all of it is handled in individual components and services
+
 export class AppComponent implements OnInit{
 
-    user: Object;
-
-    constructor(private db:DatabaseService) {
-        this.user = db.getUser<userInterface>();
+    constructor() {
     }
 
     ngOnInit() {

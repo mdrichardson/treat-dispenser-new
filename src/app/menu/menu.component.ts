@@ -11,6 +11,7 @@ export class MenuComponent implements OnInit {
 
     currentUrl: string;
 
+    // Sets currentUrl via AuthGuard in order to highlight/activate menu items
     constructor(private auth: AuthGuard) {
         auth.currentUrl.subscribe((url: any) => {
             this.currentUrl = url;

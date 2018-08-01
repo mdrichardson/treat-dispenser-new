@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
         this.userLoggedInSource = this.db.userLoggedIn;
     }
 
+    // Functions that correlate to Photon's treat and meal dispense functions.
+    // this.augerDisabled disables the buttons that run the auger. They are re-enabled by the Photon service
     treat = () => {
         this.augerDisabled = true;
         this.photon.callFunction('auger', 'treat', 'Treat').subscribe(() => this.augerDisabled = false)

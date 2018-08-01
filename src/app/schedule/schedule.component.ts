@@ -41,9 +41,9 @@ interface scheduleInterface {
 
 export class ScheduleTimesComponent implements OnInit, AfterViewInit {
 
-    public schedule = <scheduleInterface>{ times:[], days:{}};
+    public schedule = <scheduleInterface>{ times:[], days:{}}; // Must be initiated with child keys
 
-    public scheduleWarning:boolean = false;
+    public scheduleWarning:boolean = false; // Whether or not to display invalid schedule warning in DOM
 
     constructor(private photon: PhotonService) { }
 
@@ -65,6 +65,7 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
             let t3_time = info.t3.toString().length == 3 
                                     ? `0${info.t3.toString()}` 
                                     : info.t3.toString();
+            // Input all data into this.schedule
             this.schedule = {
                 on: info.on.toString() == "1" ? true : false,
                 times: [
@@ -101,12 +102,13 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                 }
             }
         }) 
-}
+    }
 
     // Set schedule values on the Photon
     setSchedule = (commandName: string, commandValue: string='', notifyTitle: string='') => {
         var functionArg;
         switch(commandName) {
+            // Handle changing of schedule times
             case 't1':
             case 't2':
             case 't3':
@@ -117,6 +119,7 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                     commandValue = `${hours}${minutes}`;
                 }
                 break;
+            // Handle whether schedule, each time, and each day is on
             case 'on':
                 switch(commandValue) {
                     case 'schedule':
@@ -138,7 +141,7 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
                         break;
                 }
         }
-        // Make sure time 1, time 2, and/or time 3 aren't equal to each other
+        // Make sure time 1, time 2, and/or time 3 aren't equal to each other. Display warning and don't execute if so
         let time1 = moment(this.schedule.times[0].t1.time).format('HHmm');
         let time2 = moment(this.schedule.times[1].t2.time).format('HHmm');
         let time3 = moment(this.schedule.times[2].t3.time).format('HHmm');

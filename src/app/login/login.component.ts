@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     
     }
 
+    // Log in using the Express API, then set the token in LocalStorage and navigate home
     loginUser() {
         this.db.login(this.user)
         .subscribe(

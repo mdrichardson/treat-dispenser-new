@@ -26,6 +26,7 @@ const userSchema = new Schema({
         }
 })
 
+// Combine some values into new key/values
 userSchema
     .virtual('photonApiUrl')
     .get(function () {

@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DebugComponent } from './debug/debug.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './auth.guard'; // Protect all but the login page
 
 const routes: Routes = [
     {
