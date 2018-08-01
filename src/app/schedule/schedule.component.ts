@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { PhotonService } from '../photon.service';
 import * as moment from 'moment';
@@ -44,8 +44,6 @@ export class ScheduleTimesComponent implements OnInit, AfterViewInit {
     public schedule = <scheduleInterface>{ times:[], days:{}};
 
     public scheduleWarning:boolean = false;
-
-    @ViewChildren('size') timeSizes: QueryList<any>;
 
     constructor(private photon: PhotonService) { }
 
