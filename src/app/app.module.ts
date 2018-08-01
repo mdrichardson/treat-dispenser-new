@@ -51,7 +51,7 @@ export const MY_MOMENT_FORMATS = {
           tokenGetter: () => {
             return localStorage.getItem('token');
           },
-          whitelistedDomains: ['localhost:3000'],
+          whitelistedDomains: ['localhost:443'],
           blacklistedRoutes: ['localhost:8100', 'api.particle.io']
         }
       }),
