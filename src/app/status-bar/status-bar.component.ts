@@ -1,7 +1,6 @@
 import { PhotonService } from '../photon.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DatabaseService, userInterface } from '../database.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-status-bar',
@@ -10,33 +9,42 @@ import { Subscription } from 'rxjs';
 })
 export class StatusBarComponent implements OnInit, OnDestroy {
 
+    public userLoggedIn:boolean = false;
+    private userLoggedInSource;
+
     public user: userInterface;
-    private statusSource: Subscription;
+    private statusSource;
     public status: string = 'Connecting...';
-    private activitySource: Subscription;
+    private activitySource;
     public activity: string = 'Idle';
     public last: string = '?';
 
     constructor(private photon: PhotonService, private db: DatabaseService) {
-        this.user = db.getUser<userInterface>();
+        this.userLoggedInSource = this.db.userLoggedIn;
     }
 
     ngOnInit() {
-        let eventsURL = `${this.user['photonApiUrl']}events/${this.user['photonAccessString']}`;
+        this.userLoggedInSource
+            .subscribe(value => {
+                if (value === true) {
+                    this.user = this.db.getUser<userInterface>();
+                    let eventsURL = `${this.user['photonApiUrl']}events/${this.user['photonAccessString']}`;
 
-        this.statusSource = this.photon.watchStatus(eventsURL)
-                            .subscribe(event => {
-                                this.status = event.toString();
-                            });
-        this.activitySource = this.photon.watchActivity(eventsURL)
-                            .subscribe(event => {
-                                this.activity = event.toString();
-                            });
-        setInterval((() => 
-        {
-            this.photon.getVariable('last')
-            .subscribe(data => this.last = data.toString())
-            })(), 20000); // () makes it call immediately, then every 20 seconds
+                    this.statusSource = this.photon.watchStatus(eventsURL)
+                                        .subscribe(event => {
+                                            this.status = event.toString();
+                                        });
+                    this.activitySource = this.photon.watchActivity(eventsURL)
+                                        .subscribe(event => {
+                                            this.activity = event.toString();
+                                        });
+                    setInterval((() => 
+                    {
+                        this.photon.getVariable('last')
+                        .subscribe(data => this.last = data.toString())
+                        })(), 20000); // () makes it call immediately, then every 20 seconds
+                }
+            })
     }
 
     ngOnDestroy() {

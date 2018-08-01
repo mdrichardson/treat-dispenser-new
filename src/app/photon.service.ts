@@ -49,9 +49,18 @@ export class PhotonService {
 
     public user: userInterface;
 
+    public userLoggedIn:boolean = false;
+    private userLoggedInSource;
+
   	constructor(private http: HttpClient, private notifierService: NotifierService, private db: DatabaseService) {
-		this.notifier = notifierService;
-        this.user = db.getUser<userInterface>();
+        this.notifier = notifierService;
+        this.userLoggedInSource = this.db.userLoggedIn;
+        this.userLoggedInSource
+            .subscribe(value => {
+                if (value === true) {
+                    this.user = this.db.getUser<userInterface>();
+                }
+            })
       }
     
     // Handle Errors

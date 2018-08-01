@@ -12,14 +12,16 @@ import { staggerItems } from '../animations/stagger';
 
 export class HomeComponent implements OnInit {
 
-    user: userInterface;
-    video: string;
+    public userLoggedIn:boolean = false;
+    private userLoggedInSource;
+    
+    private user: userInterface;
+    public video: string;
 
-    public augerDisabled:boolean = false;
+    private augerDisabled:boolean = false;
 
     constructor(private db: DatabaseService, private photon: PhotonService) {
-        this.user = db.getUser<userInterface>();
-        this.video = this.user.videoUrl + this.user.videoAuthToken;
+        this.userLoggedInSource = this.db.userLoggedIn;
     }
 
     treat = () => {
@@ -32,6 +34,13 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userLoggedInSource
+            .subscribe(value => {
+                if (value === true) {
+                    this.user = this.db.getUser<userInterface>();
+                    this.video = this.user.videoUrl + this.user.videoAuthToken;
+                }
+            })
     }
 
 }
