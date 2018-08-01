@@ -2,12 +2,12 @@
 
 form {
     display: grid;
-    grid-template-rows: 85px 85px 50px;
+    grid-template-rows: 75px 75px 75px;
     align-items: center;
     justify-items: center;
 
     button {
-        margin-top: 10px;
+        margin-top: 20px;
         align-self: stretch;
         width: 200px;
     }
@@ -42,7 +42,6 @@ select:-webkit-autofill:focus {
 .input-field {
 	position: relative;
 	display: block;
-	float: right;
 	padding: 0.8em;
 	border: none;
 	border-radius: 0;
@@ -92,7 +91,7 @@ select:-webkit-autofill:focus {
 	display: block;
     width: 100%;
     color: $secondary;
-	padding: 0.35em 0;
+	padding: 0.5em 0.8em;
 	-webkit-transition: -webkit-transform 0.25s;
 	transition: transform 0.25s;
 	-webkit-transition-timing-function: ease-in-out;
@@ -104,7 +103,7 @@ select:-webkit-autofill:focus {
 	position: absolute;
 	font-weight: 800;
 	bottom: 100%;
-	left: 0;
+	left: 0.8em;
 	height: 100%;
 	width: 100%;
 	color: $primary;
