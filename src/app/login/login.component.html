@@ -1,4 +1,4 @@
-<form ngNativeValidate (ngSubmit)="loginUser()">
+<form ngNativeValidate (ngSubmit)="loginUser()" #loginForm="ngForm">
     <span class="input" [ngClass]="{'input-filled': user.username != ''}">
         <input #inputWatch [(ngModel)]="user.username" id="name" name="username" type="text" class="input-field" required>
         <label for="name" class="input-label"><span class="input-label-content" data-content="Username">Username</span></label>
@@ -7,5 +7,5 @@
         <input #inputWatch [(ngModel)]="user.password" id="password" name="password" type="password" class="input-field" required>
         <label for="password" class="input-label"><span class="input-label-content" data-content="Password">Password</span></label>
     </span>
-    <button type="submit" class="primary" [disabled]="user.invalid">Login</button>
+    <button type="submit" class="primary" [disabled]="loginForm.form.invalid">Login</button>
 </form>

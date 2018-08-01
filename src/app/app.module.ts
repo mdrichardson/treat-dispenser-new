@@ -17,7 +17,9 @@ import { ScheduleTimesComponent } from './schedule/schedule.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
-import { JwtModule } from '@auth0/angular-jwt'
+import { JwtModule } from '@auth0/angular-jwt';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'
 
 export const MY_MOMENT_FORMATS = {
     parseInput: 'l LT',
@@ -28,6 +30,10 @@ export const MY_MOMENT_FORMATS = {
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
 };
+
+export function tokenGetter() {
+    return localStorage.getItem('token');
+} 
 
 @NgModule({
   declarations: [
@@ -48,9 +54,7 @@ export const MY_MOMENT_FORMATS = {
     HttpClientModule,
     JwtModule.forRoot({
         config: {
-          tokenGetter: () => {
-            return localStorage.getItem('token');
-          },
+          tokenGetter,
           whitelistedDomains: ['localhost:443'],
           blacklistedRoutes: ['localhost:8100', 'api.particle.io']
         }
@@ -76,7 +80,7 @@ export const MY_MOMENT_FORMATS = {
           },
     }),
     OwlDateTimeModule, 
-    OwlMomentDateTimeModule,
+    OwlMomentDateTimeModule, ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [{provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS}, AuthGuard, {
       provide: HTTP_INTERCEPTORS,

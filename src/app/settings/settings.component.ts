@@ -29,8 +29,8 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     public mealSize: string;
 
     public intervals = <intervalsInterface>{};
-    private intervalsWarning: boolean = false; // For displaying warnings if interval or interval times are invalid
-    private intervalsTimeWarning: boolean = false;
+    public intervalsWarning: boolean = false; // For displaying warnings if interval or interval times are invalid
+    public intervalsTimeWarning: boolean = false;
 
     constructor(private photon: PhotonService) { }
 

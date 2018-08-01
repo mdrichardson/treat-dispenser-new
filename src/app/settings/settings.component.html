@@ -33,10 +33,10 @@
             <div id="intervals">
                 <div id="radio-container">
                     <div>
-                        <input type="radio" id="0" [checked]="!intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon', 0, 'Continuous Interval')"><label>   Run Continuously</label>
+                        <input type="radio" id="0" [checked]="!intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon', '0', 'Continuous Interval')"><label>   Run Continuously</label>
                     </div>
                     <div>
-                        <input type="radio" id="1" [checked]="intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon', 1, 'Scheduled Interval')"><label>   Run Only Within Time Period</label>
+                        <input type="radio" id="1" [checked]="intervals.SEon" (change)="intervals.SEon = !intervals.SEon" (click)="setIntervals('SEon', '1', 'Scheduled Interval')"><label>   Run Only Within Time Period</label>
                     </div>
                 </div>
                 <div *ngIf="intervals.SEon" id="SE-times">

@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     private user: userInterface;
     public video: string;
 
-    private augerDisabled:boolean = false;
+    public augerDisabled:boolean = false;
 
     constructor(private db: DatabaseService, private photon: PhotonService) {
         this.userLoggedInSource = this.db.userLoggedIn;
