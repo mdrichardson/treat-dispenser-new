@@ -17,7 +17,6 @@ mongoose.connect(db, err => {
     }
 })
 
-
 // This can be used to verify JWT. Not needed currently.
 verifyToken = (req, res, next) => {
     if (!req.headers.authorization) {
@@ -90,6 +89,27 @@ router.post('/login', (req, res) => {
         } 
     }) 
 })
+
+// Ensure all routes require a token -- Must go after login/register, but before anything that should require valid token
+router.use(function(req, res, next) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if (token) {
+      jwt.verify(token, public_cert, function(err, decoded) {      
+        if (err) {
+          return res.json({ success: false, message: 'Failed to authenticate token.' });    
+        } else {
+          req.decoded = decoded;    
+          next();
+        }
+      });
+  
+    } else {
+      return res.status(403).send({ 
+          success: false, 
+          message: 'No token provided.' 
+      });
+    }
+  });
 
 router.get('/user:id', verifyToken, (req, res) => {
     User.findById(req.user.id, (error, user) => {
