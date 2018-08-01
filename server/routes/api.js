@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/user')
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const db = 'mongodb://localhost:27017/treat-dispenser';
 const fs = require('fs');
 const private_cert = fs.readFileSync('./jwtRS256.key');
@@ -39,38 +40,71 @@ router.get('/', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    let userData = req.body;
-    let user = new User(userData);
-    user.save((error, registeredUser) => {
-        if (error) {
-            console.log(error);
+    bcrypt.hash(req.body.password, 10, function(err, hash){
+        if (err) {
+           return res.status(500).json({
+              error: err
+           });
         } else {
-            let payload = { subject: registeredUser._id };
-            let token = jwt.sign(payload, private_cert);
-            res.status(200).send({token});
+            let userData = req.body;
+            let user = new User(userData);
+            user.password = hash;
+            user.save((error, registeredUser) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    let payload = { subject: registeredUser._id };
+                    let token = jwt.sign(payload, private_cert);
+                    res.status(200).send({token});
+                }
+            })
         }
     })
 })
 
 router.post('/login', (req, res) => {
     let userData = req.body;
-    User.findOne({username: userData.username}, (error, user) =>{
+    User.findOne({username: userData.username}, (error, user) => {
     if (error) {
         console.log(error);
     } else {
         if (!user) {
             res.status(401).send('Invalid Username');
         } else {
-            if (user.password !== userData.password) {
-                res.status(401).send('Invalid Password');
-            } else {
-                let payload = { subject: user._id };
-                let token = jwt.sign(payload, private_cert, { expiresIn: '30d' });
-                res.status(200).send({token});
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
+                if(err) {
+                    return res.status(401).json({
+                       failed: 'Unauthorized Access'
+                    });
+                 }
+                 if(result) {
+                    let payload = { subject: user._id };
+                    let token = jwt.sign(payload, private_cert, { expiresIn: '30d' });
+                    return res.status(200).send({token});
+                 }
+                 return res.status(401).json({
+                    failed: 'Unauthorized Access'
+                 });
+              });
             }
         } 
-    }       
-    })
+    }) 
+})
+
+router.get('/user:id', verifyToken, (req, res) => {
+    User.findById(req.user.id, (error, user) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (!user) {
+                res.status(401).send('Invalid User ID');
+            } else {
+                console.log(res);
+                res.status(200).send({res});
+                }
+            }
+        }
+    )
 })
 
 module.exports = router;
