@@ -9,6 +9,9 @@ const fs = require('fs');
 const private_cert = fs.readFileSync('./jwtRS256.key');
 const public_cert = fs.readFileSync('./jwtRS256.key.pub');
 
+// Quick allow/disallow of registration
+var allow_registration = false;
+
 mongoose.connect(db, err => {
     if (err) {
         console.error('Error!' + err)
@@ -39,36 +42,40 @@ router.get('/', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    bcrypt.hash(req.body.password, 10, function(err, hash){
-        if (err) {
-           return res.status(500).json({
-              error: err
-           });
-        } else {
-            let userData = req.body;
-            let user = new User(userData);
-            user.password = hash;
-            user.save((error, registeredUser) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    let payload = {
-                        _id: registeredUser._id,
-                        username: registeredUser.username,
-                        role: registeredUser.role,
-                        photonDeviceId: registeredUser.photonDeviceId,
-                        photonAccessToken: registeredUser.photonAccessToken,
-                        videoUrl: registeredUser.videoUrl,
-                        videoAuthToken: registeredUser.videoAuthToken,
-                        photonApiUrl: registeredUser.photonApiUrl,
-                        photonAccessString: registeredUser.photonAccessString,
-                    };
-                    let token = jwt.sign(payload, private_cert);
-                    res.status(200).send({token});
-                }
-            })
-        }
-    })
+    if (allow_registration) {
+        bcrypt.hash(req.body.password, 10, function(err, hash){
+            if (err) {
+               return res.status(500).json({
+                  error: err
+               });
+            } else {
+                let userData = req.body;
+                let user = new User(userData);
+                user.password = hash;
+                user.save((error, registeredUser) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        let payload = {
+                            _id: registeredUser._id,
+                            username: registeredUser.username,
+                            role: registeredUser.role,
+                            photonDeviceId: registeredUser.photonDeviceId,
+                            photonAccessToken: registeredUser.photonAccessToken,
+                            videoUrl: registeredUser.videoUrl,
+                            videoAuthToken: registeredUser.videoAuthToken,
+                            photonApiUrl: registeredUser.photonApiUrl,
+                            photonAccessString: registeredUser.photonAccessString,
+                        };
+                        let token = jwt.sign(payload, private_cert);
+                        res.status(200).send({token});
+                    }
+                })
+            }
+        })
+    } else {
+        res.status(500).send('Registration is currently disabled');
+    }
 })
 
 router.post('/login', (req, res) => {
