@@ -52,7 +52,17 @@ router.post('/register', (req, res) => {
                 if (error) {
                     console.log(error);
                 } else {
-                    let payload = { subject: registeredUser._id };
+                    let payload = {
+                        _id: registeredUser._id,
+                        username: registeredUser.username,
+                        role: registeredUser.role,
+                        photonDeviceId: registeredUser.photonDeviceId,
+                        photonAccessToken: registeredUser.photonAccessToken,
+                        videoUrl: registeredUser.videoUrl,
+                        videoAuthToken: registeredUser.videoAuthToken,
+                        photonApiUrl: registeredUser.photonApiUrl,
+                        photonAccessString: registeredUser.photonAccessString,
+                    };
                     let token = jwt.sign(payload, private_cert);
                     res.status(200).send({token});
                 }
@@ -77,7 +87,17 @@ router.post('/login', (req, res) => {
                     });
                  }
                  if(result) {
-                    let payload = { subject: user._id };
+                    let payload = {
+                        _id: user._id,
+                        username: user.username,
+                        role: user.role,
+                        photonDeviceId: user.photonDeviceId,
+                        photonAccessToken: user.photonAccessToken,
+                        videoUrl: user.videoUrl,
+                        videoAuthToken: user.videoAuthToken,
+                        photonApiUrl: user.photonApiUrl,
+                        photonAccessString: user.photonAccessString,
+                    };
                     let token = jwt.sign(payload, private_cert, { expiresIn: '30d' });
                     return res.status(200).send({token});
                  }
