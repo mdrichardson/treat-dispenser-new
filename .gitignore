@@ -42,3 +42,5 @@ Thumbs.db
 # Ignore stored auth credentials
 jwtRS256.key
 jwtRS256.key.pub
+ssl/server.crt
+ssl/server.key
