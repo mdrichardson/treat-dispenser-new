@@ -1,0 +1,133 @@
+@import '../../styles';
+
+form {
+    display: grid;
+    grid-template-rows: 85px 85px 50px;
+    align-items: center;
+    justify-items: center;
+
+    button {
+        margin-top: 10px;
+        align-self: stretch;
+        width: 200px;
+    }
+}
+
+// Fancy text input
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background-color: $light !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: $secondary !important;
+}
+
+.input {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	margin: 1em;
+	max-width: 350px;
+	width: calc(100% - 2em);
+	vertical-align: top;
+}
+
+.input-field {
+	position: relative;
+	display: block;
+	float: right;
+	padding: 0.8em;
+	border: none;
+	border-radius: 0;
+	color: $secondary;
+	font-weight: 400;
+    -webkit-appearance: none; /* for box shadows to show on iOS */
+    width: 100%;
+	background-color: $gray !important;
+	border: 2px solid transparent;
+	-webkit-transition: background-color 0.25s, border-color 0.25s;
+	transition: background-color 0.25s, border-color 0.25s;
+}
+
+.input-field:focus {
+	outline: none;
+}
+
+.input-label {
+	display: inline-block;
+	color: $gray;
+	font-weight: bold;
+	font-size: 70.25%;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+    user-select: none;
+    width: 100%;
+	text-align: left;
+	position: absolute;
+	bottom: 100%;
+	pointer-events: none;
+	overflow: hidden;
+	-webkit-transform: translate3d(0, 3em, 0);
+	transform: translate3d(0, 3em, 0);
+	-webkit-transition: -webkit-transform 0.25s;
+	transition: transform 0.25s ;
+	-webkit-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+}
+
+.input-label-content {
+	position: relative;
+	display: block;
+    width: 100%;
+    color: $secondary;
+	padding: 0.35em 0;
+	-webkit-transition: -webkit-transform 0.25s;
+	transition: transform 0.25s;
+	-webkit-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;
+}
+
+.input-label-content:after {
+	content: attr(data-content);
+	position: absolute;
+	font-weight: 800;
+	bottom: 100%;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	color: $primary;
+	padding: 0.25em 0;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 0.85em;
+}
+
+.input-field:focus + .input-label,
+.input-filled .input-label {
+	-webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.input-field:focus + .input-label .input-label-content,
+.input-filled .input-label-content{
+	-webkit-transform: translate3d(0, 150%, 0);
+	transform: translate3d(0, 150%, 0);
+}
+
+.input-field:focus + .input-field,
+.input-filled .input-field {
+	background-color: $light !important;
+	border-color: $primary;
+}

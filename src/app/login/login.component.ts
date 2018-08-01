@@ -16,12 +16,12 @@ class User {
 })
 export class LoginComponent implements OnInit {
 
-    
     user: User = new User();
 
     constructor(private db: DatabaseService, private router: Router) { }
 
     ngOnInit() {
+    
     }
 
     loginUser() {
