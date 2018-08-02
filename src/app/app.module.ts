@@ -55,8 +55,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
         config: {
           tokenGetter,
-          whitelistedDomains: ['localhost:443'],
-          blacklistedRoutes: ['localhost:8100', 'api.particle.io']
+          whitelistedDomains: ['127.0.0.1:443', 'treat.mdrichardson.net'],
+          blacklistedRoutes: ['127.0.0.1:8100', 'api.particle.io', 'vid.mdrichardson.net']
         }
       }),
     NotifierModule.withConfig({
@@ -80,7 +80,8 @@ export function tokenGetter() {
           },
     }),
     OwlDateTimeModule, 
-    OwlMomentDateTimeModule, ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    OwlMomentDateTimeModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [{provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS}, AuthGuard, {
       provide: HTTP_INTERCEPTORS,
