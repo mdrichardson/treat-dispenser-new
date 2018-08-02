@@ -3,11 +3,14 @@
         "coreid",
         "datetime",
         "days",
+        "fix",
         "get",
         "inout",
         "ng",
+        "ngsw",
         "pick",
         "sched",
+        "sh",
         "virtuals"
     ]
 }
