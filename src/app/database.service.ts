@@ -20,7 +20,7 @@ export interface userInterface {
 
 export class DatabaseService {
 
-    private loginUrl = 'https://localhost:3000/api/login'; // Be sure to change once deployed live
+    private loginUrl = 'https://treat.mdrichardson.net:3000/api/login'; // Be sure to change once deployed live
     public user: userInterface;
     private token: string;
     // Create observable for whether user is logged in or not

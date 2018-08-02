@@ -137,6 +137,7 @@ export class PhotonService {
             return () => source.close();
         });
     }
+    
     watchActivity(url: string): Observable<eventResponse> {
         return new Observable<eventResponse>(obs => {
             const source = new EventSource(url);
