@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:prod": "ng build --prod --build-optimizer --vendor-chunk --build-optimizer",
+    "build:prod": "ng build --prod --build-optimizer --vendor-chunk && cp ./src/.htaccess ./dist/treat-dispenser && bash ./fix-sw.sh",
     "build:serve": "cp ./ssl/server.key ./dist/treat-dispenser && cp ./ssl/server.crt ./dist/treat-dispenser && cd ./dist/treat-dispenser && http-server -p 4200 --cors='*' -c-1 --S -C server.crt -K server.key"
   },
   "private": true,
