@@ -1,27 +1,57 @@
-# TreatDispenser
+# Treat Dispenser and Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This is a progressive web app used to control the Particle Photon treat dispenser in this repo. The treat dispenser dispenses treats based off of input from a progressive web app, time intervals, and or feeding schedule. The dispenser, itself, is based loosely off of [this model.](https://www.thingiverse.com/thing:27854)
 
-## Development server
+This is a major overhaul of [my old Treat Dispenser repo](https://github.com/mdrichardson/treat-dispenser-old).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Stack
 
-## Code scaffolding
+* MEAN - MongoDB, Express, Angular 6, Node.js
+  * Mongoose
+  * jsonwebtoken and angular-jwt
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Improvements Over Old Repo
 
-## Build
+* Uses Node.js/Express/MongoDB back end instead of deprecated Auth0 or Basic Authentication
+* Completely self-hosted and solid greenlock SSL
+* Added lots of additional scheduling settings
+* Much better and more streamlined functions dealing with time
+* Time-picker works much better than previous
+* Animations
+* More "advanced" JavaScript usage (Observables/rxjs, template strings, ternaries, switches, arrow functions, etc)
+* SASS instead of plain CSS
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### More Website and Photon Details
 
-## Running unit tests
+You can view additional details for the website and Photon (hardware) found in the READMEs here:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* [Website - /src folder](https://github.com/mdrichardson/treat-dispenser-new/tree/master/src)
+* [Photon - /photon folder](https://github.com/mdrichardson/treat-dispenser-new/tree/master/photon)
 
-## Running end-to-end tests
+### Installation
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+#### Front end
 
-## Further help
+```
+git clone https://github.com/mdrichardson/treat-dispenser-new
+cd treat-dispenser
+npm install
+ng serve
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Back end
+
+[Install MongoDB](https://docs.mongodb.com/manual/installation/), then:
+
+```
+cd ./server
+npm install
+node server
+```
+
+### Photon
+
+1. Flash the [.ino file](https://github.com/mdrichardson/treat-dispenser-new/blob/master/photon/TreatDispenser.ino) to the Photon
+2. Wire the photon in accordance with [this diagram](https://github.com/mdrichardson/treat-dispenser-new/blob/master/photon/treat-dispenser-photon.png)
+3. Plug it in
+4. Be sure to set your Device ID and Access Key in MongoDB
