@@ -10,15 +10,3 @@
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
-
-# Basic Authentication
-SSLOptions +StrictRequire
-SSLRequireSSL
-SSLRequire %{HTTP_HOST} eq "treat.mdrichardson.net"
-AuthType Basic
-AuthName "Restricted Content"
-AuthUserFile /etc/apache2/.htpasswd
-Require valid-user
-# Redirect if they didn't use HTTPS initially
-ErrorDocument 403 https://treat.mdrichardson.net/
-ErrorDocument 404 https://treat.mdrichardson.net/
