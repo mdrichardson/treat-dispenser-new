@@ -4,6 +4,8 @@
 //      or rows with "-ms-grid-rows: 1fr". Then use "-ms-grid-column-align: center" and "-ms-grid-row-align: center"
 //   * Use 1fr instead of auto, unless you want auto-shrink
 //   * Don't use repeat(); it doesn't work
+//   * Grid in IE doesn't work with many HTML tags, especially custom ones. 
+//      Wrap them in divs instead of using "<app-component>"
 
 @import "../node_modules/angular-notifier/styles.scss";
 @import "~ng-pick-datetime/assets/style/picker.min.css";

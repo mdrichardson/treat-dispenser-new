@@ -41,18 +41,18 @@
                 </div>
                 <div *ngIf="intervals.SEon" id="SE-times">
                     <div id="start-time">
-                        <p>Start Time</p>
-                        <label>
+                        <div><p>Start Time</p></div>
+                        <div><label>
                             <input [owlDateTimeTrigger]="intervalStartInput" [owlDateTime]="intervalStartInput" [(ngModel)]="intervals.start" (dateTimeChange)="setIntervals('start', '', 'Interval Start')">
                             <owl-date-time #intervalStartInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.start"></owl-date-time>
-                        </label>
+                        </label></div>
                     </div>
                     <div id="end-time">
-                        <p>End Time</p>
-                        <label>
+                        <div><p>End Time</p></div>
+                        <div><label>
                                 <input [owlDateTimeTrigger]="intervalEndInput" [owlDateTime]="intervalEndInput" [(ngModel)]="intervals.end" (dateTimeChange)="setIntervals('end', '', 'Interval End')">
                                 <owl-date-time #intervalEndInput [pickerType]="'timer'" stepMinute="15" hour12Timer="true" [startAt]="intervals.end"></owl-date-time>
-                        </label>
+                        </label></div>
                     </div>
                     <p *ngIf="intervalsWarning" class="interval-warn">Error: Start must occur before End</p>
                 </div>
@@ -96,7 +96,7 @@
             </div>
         </div>
     </div>
-    <app-schedule class="stagger-from-bottom"></app-schedule>
+    <div id="app-schedule"><app-schedule class="stagger-from-bottom"></app-schedule></div>
 </div>
 
 
