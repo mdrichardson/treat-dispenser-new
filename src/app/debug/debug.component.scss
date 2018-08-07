@@ -2,7 +2,8 @@
 
 #debug-container {
     display: grid;
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    -ms-grid-columns: 1fr;
     grid-gap: 15px;
     height: 60vh;
     align-items: stretch;
@@ -22,13 +23,42 @@
 
     #button-group {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr 1fr 1fr;
+        -ms-grid-rows: 1fr;
         align-items: stretch;
         justify-items: stretch;
+
+        > :nth-child(1) {
+            -ms-grid-column: 1;
+        }
 
         > :nth-child(2) {
             border-right: 1px solid $dark;
             border-left: 1px solid $dark;
+            -ms-grid-column: 2;
         }
+
+        > :nth-child(1) {
+            -ms-grid-column: 3;
+        }
+    }
+
+    // Make IE happy by specifying grid-row-start
+
+    > :nth-child(1) {
+        -ms-grid-row: 1;
+    }
+
+    > :nth-child(2) {
+        -ms-grid-row: 2;
+    }
+    > :nth-child(3) {
+        -ms-grid-row: 3;
+    }
+    > :nth-child(4) {
+        -ms-grid-row: 4;
+    }
+    > :nth-child(5) {
+        -ms-grid-row: 5;
     }
 }

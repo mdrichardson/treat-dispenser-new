@@ -1,3 +1,10 @@
+// HOW TO MAKE CSS GRID WORK WITH IE:
+//   * Always define row and column start with "-ms-grid-row" and "-ms-grid-column" or elements will overlap
+//   * If you want things to center and it isn't working, be sure to define a single column with "-ms-grid-columns: 1fr"
+//      or rows with "-ms-grid-rows: 1fr". Then use "-ms-grid-column-align: center" and "-ms-grid-row-align: center"
+//   * Use 1fr instead of auto, unless you want auto-shrink
+//   * Don't use repeat(); it doesn't work
+
 @import "../node_modules/angular-notifier/styles.scss";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
@@ -30,7 +37,7 @@ i {
 
 body {
     margin: 0;
-    background: $light;
+    background-color: $light;
     height: 100vh;
 }
 
@@ -40,13 +47,13 @@ body {
     align-items: center;
 }
 
-@media only screen and (max-width: #{$mobile - 1px}) { // Don't disappear at $mobile
+@media all and (max-width: #{$mobile - 1px}) { // Don't disappear at $mobile
     .hide-mobile {
         display: none;
     }
 }
 
-@media only screen and (min-width: $mobile) {
+@media all and (min-width: $mobile) {
     .only-mobile {
         display: none;
     }

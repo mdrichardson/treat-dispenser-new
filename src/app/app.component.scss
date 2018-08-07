@@ -10,11 +10,12 @@ app-menu {
     grid-row-start: 1;
     margin: 0;
     height: $menu-height;
-    background: $primary;
+    background-color: $primary;
 }
 
 app-status-bar {
     grid-row-start: 2;
+    height: $status-bar-height;
 }
 
 #content {

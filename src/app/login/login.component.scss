@@ -3,6 +3,7 @@
 form {
     display: grid;
     grid-template-rows: 75px 75px 75px;
+    -ms-grid-columns: 1fr;
     align-items: center;
     justify-items: center;
 
@@ -10,6 +11,21 @@ form {
         margin-top: 20px;
         align-self: stretch;
         width: 200px;
+    }
+
+    * {
+        -ms-grid-column-align: center;
+    }
+    // Make IE happy by specifying row start
+
+    :nth-child(1) {
+        grid-row: 1;
+    }
+    :nth-child(2) {
+        grid-row: 2;
+    }
+    :nth-child(3) {
+        grid-row: 3;
     }
 }
 

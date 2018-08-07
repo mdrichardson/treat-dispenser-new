@@ -7,9 +7,10 @@
 
 #status-container {
     display: grid;
-    grid-template-columns: $main-page-padding repeat(2, 1fr) $main-page-padding;
+    grid-template-columns: $main-page-padding 1fr 1fr $main-page-padding;
+    -ms-grid-rows: 1fr;
     background-color: $gray;
-    height: 100%;
+    height: $status-bar-height;
     align-items: center;
     box-shadow: $shadow;
 }
@@ -17,9 +18,13 @@
 #last {
     grid-column-start: 2;
     justify-self: center;
-
+    -ms-grid-column-align: center;
+    -ms-grid-row-align: center;
 }
 
 #info {
-    justify-self: center;    
+    grid-column-start: 3;
+    justify-self: center;
+    -ms-grid-column-align: center;
+    -ms-grid-row-align: center;
 }
