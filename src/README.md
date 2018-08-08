@@ -6,6 +6,7 @@ This is a progressive web app used to control the Particle Photon treat dispense
 
 * Progressive - Can be "installed" on mobile phones
 * User authentication via MEAN stack
+* Works in Chrome, Edge, and IE (despite using CSS Grid and a lot of things IE hates)
 * Fully secure with green lock
 * Webcam display (using user authentication in MongoDB)
 * Notifications for successful/failed interactions with Photon
@@ -31,7 +32,7 @@ This is a progressive web app used to control the Particle Photon treat dispense
 
 ## To Do
 
-- [ ] Make it work in IE and Edge
+- [X] Make it work in IE and Edge
 - [ ] Add special welcome messages for demo account
 
 ## Needs to be done, but won't be unless I pick the project back up

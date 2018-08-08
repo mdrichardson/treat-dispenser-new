@@ -13,6 +13,7 @@ This is a major overhaul of [my old Treat Dispenser repo](https://github.com/mdr
 ## Improvements Over Old Repo
 
 * Uses Node.js/Express/MongoDB back end instead of deprecated Auth0 or Basic Authentication
+* Works in Chrome, Edge, and IE (despite using CSS Grid and a lot of things IE hates)
 * Completely self-hosted and solid greenlock SSL
 * Added lots of additional scheduling settings
 * Much better and more streamlined functions dealing with time
