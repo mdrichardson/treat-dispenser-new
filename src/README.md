@@ -40,3 +40,4 @@ This is a progressive web app used to control the Particle Photon treat dispense
 - [ ] Store variable values in web database and have Photon request them at startup
 - [ ] Add websocket capability to Photon and app for faster communication
 - [ ] Move all of the photon functions into the server for better security and for limiting demo requests
+- [ ] Further modularize JavaScript functions by using setters and getters for better security. Prevent user from changing values in the console. Angular components might already prevent this. Need to research.

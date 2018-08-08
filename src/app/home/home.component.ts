@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     private user: userInterface;
     public video: string;
     public isDemo: boolean;
+    public showDemoMessage: boolean = true;
 
     public augerDisabled:boolean = false;
 

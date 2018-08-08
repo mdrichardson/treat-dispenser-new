@@ -19,7 +19,9 @@ import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment'
+import { environment } from '../environments/environment';
+import { ContactComponent } from './contact/contact.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 export const MY_MOMENT_FORMATS = {
     parseInput: 'l LT',
@@ -44,12 +46,14 @@ export function tokenGetter() {
     DebugComponent,
     StatusBarComponent,
     ScheduleTimesComponent,
-    LoginComponent
+    LoginComponent,
+    ContactComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FontAwesomeModule,
     FormsModule,
     HttpClientModule,
     JwtModule.forRoot({
