@@ -33,7 +33,7 @@ This is a progressive web app used to control the Particle Photon treat dispense
 ## To Do
 
 - [X] Make it work in IE and Edge
-- [ ] Add special welcome messages for demo account
+- [X] Add special welcome messages for demo account
 
 ## Needs to be done, but won't be unless I pick the project back up
 
