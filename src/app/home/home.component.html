@@ -1,8 +1,8 @@
 <div @staggerItems>
     <video class="stagger-from-top" muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
     <div *ngIf="isDemo && showDemoMessage" id="demo-message" (click)="showDemoMessage = !showDemoMessage">
-        <p>You're using a demo account. Please don't abuse; you'll scare my dog.</p>
-        <p>Note: Video may be delayed due to slow IP cam server. Click this message to hide.</p>
+        <p>You're using a demo account. Feel free to test everything, but please don't run the dispenser too much.</p>
+        <p><em>Note: Video is delayed due to a slow IP cam server. Click this message to hide it.</em></p>
     </div>
     <div id="button-container" class="stagger-from-bottom">
         <button type="button" class="primary" (click)="meal()" [disabled]="augerDisabled">Give Meal</button>
