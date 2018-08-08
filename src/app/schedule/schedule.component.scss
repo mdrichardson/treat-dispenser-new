@@ -12,12 +12,30 @@
     margin: 20px 0px;
     display: grid;
     grid-template-columns: 100px 1fr;
+    -ms-grid-rows: 1fr;
+
+    // Fix for IE
+    > :nth-child(1) {
+        -ms-grid-column: 1;
+    }
+    > :nth-child(2) {
+        -ms-grid-column: 2;
+    }
 
     #days-container {
         display: grid;
         grid-template-columns: 200px 200px;
+        -ms-grid-rows: 1fr;
         margin-bottom: 20px;
         
+        // Fix for IE
+        > :nth-child(1) {
+            -ms-grid-column: 1;
+        }
+        > :nth-child(2) {
+            -ms-grid-column: 2;
+        }
+
         input {
             margin: 5px 0px;
         }
@@ -34,10 +52,18 @@
 
         .time {
             display: grid;
-            grid-template-columns: 20px auto;
-            grid-gap: 20px;
+            grid-template-columns: 35px auto;
+            -ms-grid-rows: 1fr;
             margin: 20px 0px;
             justify-content: start;
+
+            // Fix for IE
+            > :nth-child(1) {
+                -ms-grid-column: 1;
+            }
+            > :nth-child(2) {
+                -ms-grid-column: 2;
+            }
 
             div {
                 margin-bottom: 10px;
@@ -52,7 +78,16 @@
         .time-proportions {
             display: grid;
             grid-template-columns: 50px 50px;
-            grid-gap: 10px;
+            -ms-grid-rows: 1fr;
+            margin: 0px 10px;
+
+            // Fix for IE
+            > :nth-child(1) {
+                -ms-grid-column: 1;
+            }
+            > :nth-child(2) {
+                -ms-grid-column: 2;
+            }
         }
     }
 }
