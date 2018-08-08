@@ -7,5 +7,6 @@
         <input #inputWatch [(ngModel)]="user.password" id="password" name="password" type="password" class="input-field" required>
         <label for="password" class="input-label"><span class="input-label-content" data-content="Password">Password</span></label>
     </span>
+    <span *ngIf="invalidLogin" class="error">Invalid Username or Password</span>
     <button type="submit" class="primary" [disabled]="loginForm.form.invalid">Login</button>
 </form>

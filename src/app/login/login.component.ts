@@ -16,7 +16,8 @@ class User {
 })
 export class LoginComponent implements OnInit {
 
-    user: User = new User();
+    public user: User = new User();
+    public invalidLogin: boolean = false;
 
     constructor(private db: DatabaseService, private router: Router) { }
 
@@ -31,8 +32,13 @@ export class LoginComponent implements OnInit {
             res => {
                 localStorage.setItem('token', res.token);
                 this.router.navigate(['/']);
+                this.invalidLogin = false;
             },
-            err => console.log(err)
+            // Display invalid user/pass error as applicable
+            err => {
+                console.log(err);
+                this.invalidLogin = true;
+                }
         )
     }
 }

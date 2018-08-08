@@ -29,6 +29,11 @@ form {
     }
 }
 
+.error {
+    color: $warn;
+    text-align: center;
+}
+
 // Fancy text input
 
 input:-webkit-autofill,
