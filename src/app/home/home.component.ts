@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
     
     private user: userInterface;
     public video: string;
+    public isDemo: boolean;
 
     public augerDisabled:boolean = false;
 
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
                 if (value === true) {
                     this.user = this.db.getUser<userInterface>();
                     this.video = this.user.videoUrl + this.user.videoAuthToken;
+                    this.isDemo = this.user.role == 'demo' ? true : false;
                 }
             })
     }

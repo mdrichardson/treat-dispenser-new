@@ -5,6 +5,12 @@ video {
     box-shadow: shadow;
 }
 
+#demo-message {
+    color: $warn;
+    margin-top: 10px;
+    text-align: center;
+}
+
 @media all and (max-width: #{$mobile - 1px}) {  // Mobile
     #button-container {
         margin-top: 40%;
