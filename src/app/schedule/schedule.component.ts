@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { PhotonService } from '../photon.service';
 import * as moment from 'moment';
+import { staggerItems } from '../animations/stagger';
 
 interface scheduleInterface {
     on: boolean,
@@ -36,7 +37,8 @@ interface scheduleInterface {
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  styleUrls: ['./schedule.component.scss'],
+  animations: [staggerItems]
 })
 
 export class ScheduleTimesComponent implements OnInit, AfterViewInit {
