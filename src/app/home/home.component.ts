@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
 
     public augerDisabled:boolean = false;
 
+    public isIEOrEdge;
+
     constructor(private db: DatabaseService, private photon: PhotonService) {
         this.userLoggedInSource = this.db.userLoggedIn;
     }
@@ -42,8 +44,11 @@ export class HomeComponent implements OnInit {
             .subscribe(value => {
                 if (value === true) {
                     this.user = this.db.getUser<userInterface>();
-                    this.video = this.user.videoUrl + this.user.videoAuthToken;
                     this.isDemo = this.user.role == 'demo' ? true : false;
+                    // MJpeg doesn't work in IE/Edge, so use the slower OGG video stream if user is on IE/Edge
+                    this.isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
+                    this.video = this.user.videoUrl + this.user.videoAuthToken;
+                    this.video = this.isIEOrEdge ? this.video.replace('Mjpeg', 'live') : this.video
                 }
             })
     }
