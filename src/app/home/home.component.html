@@ -1,6 +1,8 @@
 <div @staggerItems>
-    <video *ngIf="isIEOrEdge" class="stagger-from-top" muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
-    <img  *ngIf="!isIEOrEdge" class="stagger-from-top" bind-src="video" width="100%" width="100%" height="-1" />
+    <!-- Keeping these in case we switch away from YouTube streaming -->
+    <!-- <video *ngIf="isIEOrEdge" class="stagger-from-top" muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
+    <img  *ngIf="!isIEOrEdge" class="stagger-from-top" bind-src="video" width="100%" width="100%" height="-1" /> -->
+    <iframe width="100%" bind-src="video" frameborder="0" allow="autoplay; encrypted-media"></iframe>
     <div *ngIf="isDemo && showDemoMessage" id="demo-message" (click)="showDemoMessage = !showDemoMessage">
         <p>You're using a demo account. Feel free to test everything, but please don't run the dispenser too much.</p>
         <p><em>Note: Video is delayed, especially in IE/Edge due to camera server limitations. Click this message to hide it.</em></p>

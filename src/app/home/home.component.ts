@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService, userInterface } from '../database.service';
 import { PhotonService } from '../photon.service';
 import { staggerItems } from '../animations/stagger';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
 
     public isIEOrEdge;
 
-    constructor(private db: DatabaseService, private photon: PhotonService) {
+    constructor(private db: DatabaseService, private photon: PhotonService, public sanitizer: DomSanitizer) {
         this.userLoggedInSource = this.db.userLoggedIn;
     }
 
@@ -47,8 +48,13 @@ export class HomeComponent implements OnInit {
                     this.isDemo = this.user.role == 'demo' ? true : false;
                     // MJpeg doesn't work in IE/Edge, so use the slower OGG video stream if user is on IE/Edge
                     this.isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);
-                    this.video = this.user.videoUrl + this.user.videoAuthToken;
-                    this.video = this.isIEOrEdge ? this.video.replace('Mjpeg', 'live') : this.video
+                    // It's okay to reload user data, but don't reload the video URL or it reverts to paused
+                    if (!this.video) {
+                        this.video = this.user.videoUrl + this.user.videoAuthToken;
+                        this.video = this.isIEOrEdge ? this.video.replace('Mjpeg', 'live') : this.video;
+                        // Add parameters for autoplay at the end if source if youtube and bypass security
+                        this.video = this.video.includes('https://www.youtube.com/embed/') ? this.sanitizer.bypassSecurityTrustResourceUrl(this.video) + '?rel=0&autoplay=1&mute=1' : this.video;
+                    }
                 }
             })
     }

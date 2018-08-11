@@ -1,8 +1,8 @@
 @import '../../styles';
 
-img {
-    max-height: 65vh;
+img, video, iframe {
     box-shadow: shadow;
+    height: 65vh;
 }
 
 #demo-message {
