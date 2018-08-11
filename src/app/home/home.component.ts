@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService, userInterface } from '../database.service';
 import { PhotonService } from '../photon.service';
 import { staggerItems } from '../animations/stagger';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
     
     private user: userInterface;
     public video: string;
+    public videoSafe: SafeResourceUrl;
     public isDemo: boolean;
     public showDemoMessage: boolean = true;
 
@@ -53,7 +54,8 @@ export class HomeComponent implements OnInit {
                         this.video = this.user.videoUrl + this.user.videoAuthToken;
                         this.video = this.isIEOrEdge ? this.video.replace('Mjpeg', 'live') : this.video;
                         // Add parameters for autoplay at the end if source if youtube and bypass security
-                        this.video = this.video.includes('https://www.youtube.com/embed/') ? this.sanitizer.bypassSecurityTrustResourceUrl(this.video) + '?rel=0&autoplay=1&mute=1' : this.video;
+                        this.video = this.video.includes('https://www.youtube.com/embed/') ? this.video + '?rel=0&autoplay=1&mute=1' : this.video;
+                        this.videoSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
                     }
                 }
             })
