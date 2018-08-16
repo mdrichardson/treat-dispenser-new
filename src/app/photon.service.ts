@@ -100,15 +100,11 @@ export class PhotonService {
         }
         // Set longer timeout for debugs
         var TimeoutLength = (functionArg.includes('in', 'out', 'inout', 'load') || functionName == 'auger') ? 30000 : 10000;
-		if (functionName == 'auger'){
-			// Disable auger buttons
-		}
 		return this.http.post<functionResponse>(
 			this.user['photonApiUrl'] + functionName + this.user['photonAccessString'], // URL
 			{'arg': functionArg} // Data
         )
         .pipe(
-            // timeout(TimeoutLength),
             map((data: functionResponse) => {
                 if (data.return_value == 1) {
                     console.log(`${functionName} performed successfully: ${functionArg}`);
@@ -118,7 +114,6 @@ export class PhotonService {
                 } else {
                     this.throwError(data, notifyTitle);
                 }
-                // enable auger buttons
             }),
             catchError((error):any => { // catch errors here so we don't have to individually
                 error => {
