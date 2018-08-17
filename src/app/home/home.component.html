@@ -1,13 +1,11 @@
 <div @staggerItems>
-    <!-- Keeping these in case we switch away from YouTube streaming -->
-    <!-- <video *ngIf="isIEOrEdge" class="stagger-from-top" muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
-    <img  *ngIf="!isIEOrEdge" class="stagger-from-top" bind-src="video" width="100%" width="100%" height="-1" /> -->
-    <iframe width="100%" bind-src="videoSafe" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    <video *ngIf="isIEOrEdge" class="stagger-from-top" muted id="video_0" bind-src="video" type="video/ogg" autoplay="autoplay"  width="100%" preload="none" controls></video>
+    <img  *ngIf="!isIEOrEdge" class="stagger-from-top" bind-src="video" width="100%" width="100%" height="-1" />
+    <!-- Keeping these in case we switch back to YouTube streaming -->
+    <!-- <iframe width="100%" bind-src="videoSafe" frameborder="0" allow="autoplay; encrypted-media"></iframe> -->
     <div *ngIf="isDemo && showDemoMessage" id="demo-message" (click)="showDemoMessage = !showDemoMessage">
         <p>You're using a demo account. Feel free to test everything, but please don't run the dispenser too much.</p>
         <p>Note: Video is delayed, especially in IE/Edge due to camera server limitations. Click this message to hide it.</p>
-        <br />
-        <p>Also, it looks like my cat unplugged the dispenser. I'll fix this tonight (8/16)</p>
     </div>
     <div id="button-container" class="stagger-from-bottom">
         <button type="button" class="primary" (click)="meal()" [disabled]="augerDisabled">Give Meal</button>
