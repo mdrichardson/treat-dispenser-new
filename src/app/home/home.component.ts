@@ -3,7 +3,7 @@ import { DatabaseService, userInterface } from '../database.service';
 import { PhotonService } from '../photon.service';
 import { staggerItems } from '../animations/stagger';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders as Headers } from '@angular/common/http';
 import { timeout, catchError, map } from 'rxjs/operators';
 
 @Component({
@@ -44,19 +44,22 @@ export class HomeComponent implements OnInit {
     }
     // Check if video is online
     checkVideoAndReturnAppropriateURL = () => {
-        console.log('checking video ', this.video);
-        this.http.get(this.video)
-                .pipe(
-                    timeout(1000),
-                    catchError((error): any => { // catch errors here so we don't have to individually
-                        console.log('error ', error);
+        // We can't use the regular this.video URL because browser prefetch blocks redirects
+        this.http.get('https://syndac.no-ip.biz:8100')
+            .pipe(
+                timeout(1000),
+                catchError(e => {
+                    // e.status = 0 when netcam is up and returns a 401 error. There is no e.status when it is totally offline
+                    if (e.status !== 0) {
                         this.video = '/assets/offline.png';
-                    }),
-                    map((data: any) => {
-                        console.log('success ', data);
-                    })
-                    ).subscribe();
-        return this.video
+                        return null;
+                    }
+                }),
+                map(
+                    data => console.log('Data ', data)
+                )
+            ).subscribe();
+        return this.video;
     }
 
     ngOnInit() {
