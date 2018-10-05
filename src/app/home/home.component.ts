@@ -3,6 +3,8 @@ import { DatabaseService, userInterface } from '../database.service';
 import { PhotonService } from '../photon.service';
 import { staggerItems } from '../animations/stagger';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { timeout, catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +28,7 @@ export class HomeComponent implements OnInit {
 
     public isIEOrEdge;
 
-    constructor(private db: DatabaseService, private photon: PhotonService, public sanitizer: DomSanitizer) {
+    constructor(private db: DatabaseService, private photon: PhotonService, public sanitizer: DomSanitizer, private http: HttpClient) {
         this.userLoggedInSource = this.db.userLoggedIn;
     }
 
@@ -39,6 +41,22 @@ export class HomeComponent implements OnInit {
     meal = () => {
         this.augerDisabled = true;
         this.photon.callFunction('auger', 'meal', 'Meal').subscribe(() => this.augerDisabled = false);
+    }
+    // Check if video is online
+    checkVideoAndReturnAppropriateURL = () => {
+        console.log('checking video ', this.video);
+        this.http.get(this.video)
+                .pipe(
+                    timeout(1000),
+                    catchError((error): any => { // catch errors here so we don't have to individually
+                        console.log('error ', error);
+                        this.video = '/assets/offline.png';
+                    }),
+                    map((data: any) => {
+                        console.log('success ', data);
+                    })
+                    ).subscribe();
+        return this.video
     }
 
     ngOnInit() {
@@ -57,6 +75,8 @@ export class HomeComponent implements OnInit {
                         this.video = this.video.includes('https://www.youtube.com/embed/') ? this.video + '?rel=0&autoplay=1&mute=1' : this.video;
                         this.videoSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
                     }
+                    // If the video is offline, change URL to offline image
+                    this.video = this.checkVideoAndReturnAppropriateURL();
                 }
             })
     }
