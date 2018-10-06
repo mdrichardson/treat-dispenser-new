@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     
     private user: userInterface;
     public video: string;
+    public videoOffline = true;
     public videoSafe: SafeResourceUrl;
     public isDemo: boolean;
     public showDemoMessage: boolean = true;
@@ -42,24 +43,8 @@ export class HomeComponent implements OnInit {
         this.augerDisabled = true;
         this.photon.callFunction('auger', 'meal', 'Meal').subscribe(() => this.augerDisabled = false);
     }
-    // Check if video is online
-    checkVideoAndReturnAppropriateURL = () => {
-        // We can't use the regular this.video URL because browser prefetch blocks redirects
-        this.http.get('https://syndac.no-ip.biz:8100')
-            .pipe(
-                timeout(1000),
-                catchError(e => {
-                    // e.status = 0 when netcam is up and returns a 401 error. There is no e.status when it is totally offline
-                    if (e.status !== 0) {
-                        this.video = '/assets/offline.png';
-                        return null;
-                    }
-                }),
-                map(
-                    data => console.log('Data ', data)
-                )
-            ).subscribe();
-        return this.video;
+    videoLoaded = () => {
+        this.videoOffline = false;
     }
 
     ngOnInit() {
@@ -78,8 +63,6 @@ export class HomeComponent implements OnInit {
                         this.video = this.video.includes('https://www.youtube.com/embed/') ? this.video + '?rel=0&autoplay=1&mute=1' : this.video;
                         this.videoSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.video);
                     }
-                    // If the video is offline, change URL to offline image
-                    this.video = this.checkVideoAndReturnAppropriateURL();
                 }
             })
     }
