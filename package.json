@@ -47,7 +47,7 @@
     "ng-pick-datetime": "^6.0.10",
     "ng-pick-datetime-moment": "^1.0.6",
     "node-sass": "^4.11.0",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "rxjs": "^6.0.0",
     "socks": "^2.2.1",
     "timespan": "^2.3.0",
